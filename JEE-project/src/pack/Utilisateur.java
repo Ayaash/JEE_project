@@ -21,5 +21,4 @@ public class Utilisateur {
 	public boolean estAdmin() {
 		return false;
 	}
-
 }
