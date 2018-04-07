@@ -7,11 +7,11 @@
 	<title>Connexion</title>
 </head>
 <body>
-	<form>
+	<form method="post" action=${pageContext.request.contextPath}/connexion>
 		<p>Pseudo: <input type="text" name="pseudo"></p>
 		<p>Mot de passe: <input type="password" name=mdp></p>
 		
-		<input type="button" value="se connecter" ONCLICK="button1()">			
+		<input type="submit" value="se connecter" name="connexion">			
 	</form>
 	
 </body>

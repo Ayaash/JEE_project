@@ -8,9 +8,12 @@
 </head>
 <body>
 
-	<form>
-		<input type="button" value="se connecter" ONCLICK="button1()">
-		<input type="button" value="s'inscrire" ONCLICK="button1()">
+	<h1>Bienvenue sur notre site de jeu en ligne</h1>
+
+
+	<form method="post" action=${pageContext.request.contextPath}/accueil>
+		<input type="submit" value="se connecter" name="connexion">
+		<input type="submit" value="s'inscrire" name="inscription">
 			
 	</form>
 

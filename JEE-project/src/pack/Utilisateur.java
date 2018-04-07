@@ -8,17 +8,40 @@ public class Utilisateur {
 	private String motDePasse;
 	private List<Jeux> jeuxPreferes;
 	private Date dateDeNaissance;
-	private String couriel;
+	private String courriel;
 	
-	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String couriel) {
+	private boolean estAdmin;
+	
+	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 		this.jeuxPreferes = jeuxPreferes;
 		this.dateDeNaissance = dateDeNaissance;
-		this.couriel = couriel;
+		this.courriel = courriel;
+		this.estAdmin=false;
 	}
 	
 	public boolean estAdmin() {
-		return false;
+		return estAdmin;
+	}
+	
+	public void setAdmin(boolean isAdmin) {
+		this.estAdmin=isAdmin;
+	}
+	
+	public String getPseudo() {
+		return pseudo;
+	}
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+	public String getCourriel() {
+		return courriel;
+	}
+	public Date getDateDeNaissance() {
+		return dateDeNaissance;
+	}
+	public List<Jeux> getJeuxPreferes() {
+		return jeuxPreferes;
 	}
 }

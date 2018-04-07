@@ -7,15 +7,18 @@
 	<title>Inscription</title>
 </head>
 <body>
-	<form>
-		<p>Pseudo: <input type="text" name="pseudo"></p>
-		<p>Mot de passe: <input type="password" name="mdp"></p>
-		<p>Date de naissance: <input type="text" name="ddn"></p>
-		<p>Courriel: <input type="text" name="mail"></p>
-		<p>Jeux préférés: <input type="text" name="jeux"></p>
+	<form method="post" action=${pageContext.request.contextPath}/inscription>
+		<p>Pseudo: <input type="text" name="pseudo" required></p>
+		<p>Mot de passe: <input type="password" name="mdp" required></p>
+		<p>Date de naissance: <input type="date" name="ddn" min="0001-01-01" max="9999-99-99" required></p>
+		<p>Courriel: <input type="email" name="mail" required></p>
+		<p>Jeux préférés:</p>
+		<p>    <input type="checkbox" name="seawar"> SeaWar:</p>
+		<p>    <input type="checkbox" name="fightShip"> FightShip:</p>
+			
 		
 		
-		<input type="button" value="s'inscrire" ONCLICK="button1()">			
+		<input type="submit" value="s'inscrire" name="inscription">			
 	</form>
 </body>
 </html>
