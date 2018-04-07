@@ -8,13 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import outilsdetest.TestSansBDD;
 import pack.Utilisateur;
 
 
 public class Accueil extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
-        HttpSession session = request.getSession();
+       
+		TestSansBDD.init();//TODO Pour tests uniquement, a supprimer
+		
+		HttpSession session = request.getSession();
         if (session == null) {
             //Aucune session n'existe
     		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_invite.jsp" ).forward( request, response );

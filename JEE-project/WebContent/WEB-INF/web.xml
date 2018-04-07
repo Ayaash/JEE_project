@@ -32,5 +32,6 @@
 		<servlet-name>Connexion</servlet-name>
 		<url-pattern>/connexion</url-pattern>
 	</servlet-mapping>
+	
 
 </web-app>

@@ -9,24 +9,17 @@ public class Utilisateur {
 	private List<Jeux> jeuxPreferes;
 	private Date dateDeNaissance;
 	private String courriel;
-	
-	private boolean estAdmin;
-	
+		
 	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 		this.jeuxPreferes = jeuxPreferes;
 		this.dateDeNaissance = dateDeNaissance;
 		this.courriel = courriel;
-		this.estAdmin=false;
 	}
 	
 	public boolean estAdmin() {
-		return estAdmin;
-	}
-	
-	public void setAdmin(boolean isAdmin) {
-		this.estAdmin=isAdmin;
+		return false;
 	}
 	
 	public String getPseudo() {
