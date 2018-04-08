@@ -98,7 +98,6 @@ public class DBManager {
 				while (keys.hasMoreElements()) {
 					String key = (String) keys.nextElement();
 					System.out.println(key + ":" + p.getProperty(key));
-					
 				}
 
 			} catch (SQLException e) {

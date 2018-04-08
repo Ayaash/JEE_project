@@ -1,0 +1,1 @@
+A pour vocation de contenir les script de création de la BDD initiale, avec quelques données de test, mais surtout les tables en bon état.
