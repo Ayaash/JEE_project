@@ -13,8 +13,8 @@ public class LienMySQL {
 	private String serveur = "jdbc:mysql://localhost:3306/BDD";
 	
 	Connection connection = null;
-	java.sql.Statement stat = null;
-	ResultSet rs = null;
+	java.sql.Statement statement = null;
+	ResultSet resultSet = null;
 	
 	//Singleton pour n'avoir qu'une seule source d'interaction avec la BDD
 	private static LienMySQL instance;
@@ -30,6 +30,14 @@ public class LienMySQL {
 	
 	public void getConnection() {
 		try {
+		    Class.forName("com.mysql.jdbc.Driver");
+		} 
+		catch (ClassNotFoundException e) {
+		    // TODO Auto-generated catch block
+		    e.printStackTrace();
+		} 
+
+		try {
 			connection =  DriverManager.getConnection(serveur, "root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -39,23 +47,27 @@ public class LienMySQL {
 	public void fermerConnections() {
 		try {
 			if(connection != null) connection.close();
-			if(stat != null) stat.close();
-			if(rs != null) rs.close();
+			if(statement != null) statement.close();
+			if(resultSet != null) resultSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	public boolean bddInitiale() {
-		
 		return true;
 	}
 	
-	public void main() {
+	public String ExecuterRequete(String requete) {
 		getConnection();
+		String retour = null;
 		try {
-			stat = connection.createStatement();
-			rs = stat.executeQuery("SELECT * FROM test;");
-			System.out.println(rs.toString());
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(requete);
+			
+			retour = resultSet.toString();
+			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
+
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,8 +75,10 @@ public class LienMySQL {
 			fermerConnections();
 		}
 		
-		
+		return retour;
 	}
-
 	
+	
+
+
 }

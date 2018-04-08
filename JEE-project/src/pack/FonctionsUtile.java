@@ -6,7 +6,10 @@ import javax.servlet.http.HttpSession;
 import outilsdetest.TestSansBDD;
 
 public class FonctionsUtile {
-	/**retourne -1 si pas connecté, 0 si utilisateur et 1 si administrateur*/
+	
+	
+	
+	/**retourne NO si pas connecté, USER si utilisateur et ADMIN si administrateur*/
 	public static ConnectionType typeDeConnection( HttpServletRequest request) {		
 		HttpSession session = request.getSession();
         if (session == null) {
