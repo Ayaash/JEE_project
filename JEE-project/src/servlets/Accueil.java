@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import outilsdetest.TestSansBDD;
+import pack.ConnectionType;
+import pack.FonctionsUtile;
 import pack.Utilisateur;
 
 
@@ -18,23 +20,20 @@ public class Accueil extends HttpServlet {
        
 		TestSansBDD.init();//TODO Pour tests uniquement, a supprimer
 		
-		HttpSession session = request.getSession();
-        if (session == null) {
-            //Aucune session n'existe
-    		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_invite.jsp" ).forward( request, response );
-        } else {
-        	if(session.getAttribute("utilisateur")==null) {
-        		//La session ne correspond pas a un utilisateur
-        		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_invite.jsp" ).forward( request, response );
-        	}else {
-	            // Un session existe, on verifie si c'est en administrateur
-	        	if(((Utilisateur)session.getAttribute("utilisateur")).estAdmin()) {//Si est administrateur
-	        		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
-	        	}else {
-	        		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_user.jsp" ).forward( request, response );
-	        	}
-        	}
-        }
+	
+        //On change la page d'accueil en fonction du type de connection
+		
+        ConnectionType ct=FonctionsUtile.typeDeConnection(request);
+        if(ct==ConnectionType.NO) {
+			//Aucune session correspondant a un utilisateur n'existe
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_invite.jsp" ).forward( request, response );
+        }else if(ct==ConnectionType.USER) {
+			//La session correspondant a un utilisateur
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_user.jsp" ).forward( request, response );
+       }else if(ct==ConnectionType.ADMIN) {
+    	   //La session correspondant a un administrateur
+    	   this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
+      }
 
 	}
 
@@ -50,6 +49,8 @@ public class Accueil extends HttpServlet {
 	        HttpSession session = request.getSession();
 	        session.invalidate();
 			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
+	    }else if(request.getParameter("modif") != null) {
+	    	response.sendRedirect(this.getServletContext().getContextPath()+"/modification");
 	    }
 
 
