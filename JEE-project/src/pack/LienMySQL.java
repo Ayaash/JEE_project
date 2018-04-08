@@ -88,15 +88,25 @@ public class LienMySQL {
 		return id;
 	}
 	
-	public void insererUtilisateur(Utilisateur utilisateur) {
+	public int insererUtilisateur(Utilisateur utilisateur) {
 		getConnection();
-
+		int id = -1;
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
 		String requete = "INSERT INTO utilisateur VALUE (" + utilisateur.getPseudo() + ", " + utilisateur.getMotDePasse() + ", " + date + ", " + utilisateur.getCourriel() + ", false);";
 		this.executerRequete(requete);
+		requete = "SELECT id FROM utilisateur WHERE  pseudo=" + utilisateur.getPseudo() + " AND email= "  + utilisateur.getCourriel() + ";" ;
+		try {
+			resultSet.next();
+			id = resultSet.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		fermerConnections();
+		return id;		
 	}
 	
 	public void modifierUtilisateur(Utilisateur utilisateur) {

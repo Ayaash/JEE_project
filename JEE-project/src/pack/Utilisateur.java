@@ -13,6 +13,7 @@ public class Utilisateur {
 	private int nbParties;
 		
 	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+		this.id = -1;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 		this.jeuxPreferes = jeuxPreferes;
