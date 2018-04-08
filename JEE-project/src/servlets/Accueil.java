@@ -87,6 +87,8 @@ public class Accueil extends HttpServlet {
 	    	
 	    }else if(request.getParameter("modifjeux") != null) {
 	    	response.sendRedirect(this.getServletContext().getContextPath()+"/modifjeux");
+	    }else if(request.getParameter("partcour") != null) {
+	    	response.sendRedirect(this.getServletContext().getContextPath()+"/partiesencours");
 	    }
 		
 		
