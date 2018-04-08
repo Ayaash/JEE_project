@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class LienMySQL {
 	/**
-	 * TODO: Necessite un serveur MySQL actif avec le mot de passe root = 'root'. Et une database nommée BDD.
+	 * Necessite un serveur MySQL actif avec le mot de passe root = 'root'. Et une database nommée projet_jee.
 	 */
 
-	private String serveur = "jdbc:mysql://localhost:3306/BDD";
+	private String serveur = "jdbc:mysql://localhost:3306/projet_jee";
 	
 	Connection connection = null;
 	java.sql.Statement statement = null;
@@ -73,11 +74,17 @@ public class LienMySQL {
 	
 	public int authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
-		int id = -1;
-		executerRequete("SELECT id FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
+		int id;
+		Date date;
+		String email;
+		Utilisateur utilisateur = null;
+		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
 		try {
 			if(resultSet.next()) {
 				id = resultSet.getInt(1);
+				date = resultSet.getDate("date_naissance");
+				email = resultSet.getString(5);
+				utilisateur = new Utilisateur();
 			}
 			
 		} catch (SQLException e) {
