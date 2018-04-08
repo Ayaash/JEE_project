@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Utilisateur {
 	
+	private int id;
 	private String pseudo;
 	private String motDePasse;
 	private List<Jeux> jeuxPreferes;
@@ -12,6 +13,7 @@ public class Utilisateur {
 	private int nbParties;
 		
 	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+		this.id = -1;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 		this.jeuxPreferes = jeuxPreferes;
@@ -45,5 +47,13 @@ public class Utilisateur {
 	}
 	public List<Jeux> getJeuxPreferes() {
 		return jeuxPreferes;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

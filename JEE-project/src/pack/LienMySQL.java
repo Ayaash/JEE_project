@@ -53,12 +53,9 @@ public class LienMySQL {
 			e.printStackTrace();
 		}
 	}
-	public boolean bddInitiale() {
-		return true;
-	}
+
 	
-	public String ExecuterRequete(String requete) {
-		getConnection();
+	private void executerRequete(String requete) {
 		String retour = null;
 		try {
 			statement = connection.createStatement();
@@ -71,14 +68,56 @@ public class LienMySQL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			fermerConnections();
 		}
-		
-		return retour;
 	}
 	
+	public int authentificationUtilisateur(String pseudo, String motDePasse) {
+		getConnection();
+		int id = -1;
+		executerRequete("SELECT id FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
+		try {
+			if(resultSet.next()) {
+				id = resultSet.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fermerConnections();
+		return id;
+	}
 	
+	public int insererUtilisateur(Utilisateur utilisateur) {
+		getConnection();
+		int id = -1;
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = sdf.format(utilisateur.getDateDeNaissance());
+		
+		String requete = "INSERT INTO utilisateur VALUE (" + utilisateur.getPseudo() + ", " + utilisateur.getMotDePasse() + ", " + date + ", " + utilisateur.getCourriel() + ", false);";
+		this.executerRequete(requete);
+		requete = "SELECT id FROM utilisateur WHERE  pseudo=" + utilisateur.getPseudo() + " AND email= "  + utilisateur.getCourriel() + ";" ;
+		try {
+			resultSet.next();
+			id = resultSet.getInt(1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		fermerConnections();
+		return id;		
+	}
+	
+	public void modifierUtilisateur(Utilisateur utilisateur) {
+		getConnection();
+		
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = sdf.format(utilisateur.getDateDeNaissance());
+		
+		String requete = "UPDATE utilisateur SET pseudo=" + utilisateur.getPseudo() + ", mdp=" + utilisateur.getMotDePasse() + ", date_naissance=" + date + ", email=" + utilisateur.getCourriel() +" WHERE id=" + utilisateur.getId() + ";";
+		this.executerRequete(requete);
+		fermerConnections();
+	}
 
 }
