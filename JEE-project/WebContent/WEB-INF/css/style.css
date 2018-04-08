@@ -3,7 +3,11 @@ h1{
 }
 
 
-.erreur{
+err{
 	color : red;
 }
 
+.jeu{
+	background-color: black;
+	
+}

@@ -84,8 +84,6 @@ public class Inscription extends HttpServlet {
 	        }else{
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
-				System.out.println(u.getJeuxPreferes().size());
-				System.out.println(u.getDateDeNaissance());
 
 				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donnée
 				

@@ -41,6 +41,14 @@
 		<servlet-name>Modification</servlet-name>
 		<url-pattern>/modification</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PageJeu</servlet-name>
+		<servlet-class>servlets.PageJeu</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PageJeu</servlet-name>
+		<url-pattern>/jeu</url-pattern>
+	</servlet-mapping>
 	
 
 </web-app>
