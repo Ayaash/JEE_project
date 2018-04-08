@@ -9,6 +9,7 @@ public class Utilisateur {
 	private List<Jeux> jeuxPreferes;
 	private Date dateDeNaissance;
 	private String courriel;
+	private int nbParties;
 		
 	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.pseudo = pseudo;
