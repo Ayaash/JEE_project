@@ -1,5 +1,8 @@
 package pack;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,7 +10,8 @@ import outilsdetest.TestSansBDD;
 
 public class FonctionsUtile {
 	
-	
+	public static List<Partie> partiesEnCours=new LinkedList<Partie>();
+
 	
 	/**retourne NO si pas connecté, USER si utilisateur et ADMIN si administrateur*/
 	public static ConnectionType typeDeConnection( HttpServletRequest request) {		

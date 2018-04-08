@@ -14,6 +14,7 @@ import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
 import pack.Jeux;
+import pack.Partie;
 import pack.Utilisateur;
 
 
@@ -52,7 +53,19 @@ public class Accueil extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-
+      //Recuperation du jeu selectionné si necessaire
+  		if(session.getAttribute("listejeux")!=null) {
+  			List<Jeux> list=(List<Jeux>) request.getSession().getAttribute("listejeux");
+  			Iterator<Jeux> iter=list.iterator();
+  			while(iter.hasNext()){
+  				Jeux jeu=iter.next();
+  				if(request.getParameter(jeu.toString())!=null) {
+  					//On a selectionne un jeu, on est redirige vers la page de jeu
+  			        session.setAttribute("jeu", jeu);
+  					response.sendRedirect(this.getServletContext().getContextPath()+"/jeu");
+  				}
+  			}
+  		}
 		
 		/**En fonction du bouton clique, on redirige a la page correspondante*/
 		if(request.getParameter("connexion") != null) {
@@ -60,6 +73,13 @@ public class Accueil extends HttpServlet {
 	    }else if(request.getParameter("inscription") != null) {
 	    	response.sendRedirect(this.getServletContext().getContextPath()+"/inscription");
 	    }else if(request.getParameter("deconnexion") != null) {
+	    	//Si une partie etait en cours, on y met fin
+	    	if(session.getAttribute("partieencour")!=null) {
+	    		Partie part=(Partie) session.getAttribute("partieencours");
+		        part.finPartie();
+		        FonctionsUtile.partiesEnCours.remove(part);
+		        session.setAttribute("partieencours", null);
+	    	}
 	        session.invalidate();
 			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
 	    }else if(request.getParameter("modif") != null) {
@@ -67,19 +87,7 @@ public class Accueil extends HttpServlet {
 	    }
 		
 		
-		//Recuperation du jeu selectionné si necessaire
-		if(session.getAttribute("listejeux")!=null) {
-			List<Jeux> list=(List<Jeux>) request.getSession().getAttribute("listejeux");
-			Iterator<Jeux> iter=list.iterator();
-			while(iter.hasNext()){
-				Jeux jeu=iter.next();
-				if(request.getParameter(jeu.toString())!=null) {
-					//On a selectionne un jeu, on est redirige vers la page de jeu
-			        session.setAttribute("jeu", jeu);
-					response.sendRedirect(this.getServletContext().getContextPath()+"/jeu");
-				}
-			}
-		}
+		
 
 
 

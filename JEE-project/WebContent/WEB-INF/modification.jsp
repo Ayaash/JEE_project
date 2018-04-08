@@ -55,7 +55,9 @@
 		}%>
 
 		
-		<input type="submit" value="valider les modification" name="modification">			
+		<input type="submit" value="valider les modification" name="modification">
+		<input type="submit" value="Accueil" name="accueil">			
+					
 	</form>
 </body>
 </html>

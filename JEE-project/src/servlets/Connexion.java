@@ -57,6 +57,8 @@ public class Connexion extends HttpServlet {
 		        request.getRequestDispatcher( "/WEB-INF/connexion.jsp" ).forward(request, response);
 		    }
 
+		}else if(request.getParameter("accueil")!=null) {
+			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
 		}
 	}
 }
