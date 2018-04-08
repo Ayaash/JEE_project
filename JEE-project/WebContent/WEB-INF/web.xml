@@ -49,6 +49,14 @@
 		<servlet-name>PageJeu</servlet-name>
 		<url-pattern>/jeu</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	<servlet-name>AdminModifJeux</servlet-name>
+		<servlet-class>servlets.AdminModifJeux</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminModifJeux</servlet-name>
+		<url-pattern>/modifjeux</url-pattern>
+	</servlet-mapping>
 	
 
 </web-app>

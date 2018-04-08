@@ -13,7 +13,13 @@
 
 	<form method="post" action=${pageContext.request.contextPath}/accueil>
 		<input type="submit" value="se deconnecter" name="deconnexion">
-		<input type="submit" value="modifier son compte" name="modif">
+		<input type="submit" value="modifier son compte" name="modif">			
+	</form>
+	<form method="post" action=${pageContext.request.contextPath}/accueil>
+		<input type="submit" value="modifier les jeux disponibles" name="modifjeux">
+		<input type="submit" value="Parties en cours" name="partcour">		
+		<input type="submit" value="Parties terminées" name="partterm">			
+		<input type="submit" value="liste des joueurs" name="joueur">			
 			
 	</form>
 
