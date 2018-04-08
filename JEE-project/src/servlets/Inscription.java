@@ -93,6 +93,8 @@ public class Inscription extends HttpServlet {
 	        	response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
 	        }
 
+		}else if(request.getParameter("accueil")!=null) {
+			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
 		}
 	}
 }

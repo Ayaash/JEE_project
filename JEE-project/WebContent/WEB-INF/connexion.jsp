@@ -16,7 +16,9 @@
 		
 		</p>
 		
-		<input type="submit" value="se connecter" name="connexion">			
+		<input type="submit" value="se connecter" name="connexion">
+		<input type="submit" value="Accueil" name="accueil">			
+					
 	</form>
 	
 </body>

@@ -39,7 +39,9 @@
 		}%>
 
 		
-		<input type="submit" value="s'inscrire" name="inscription">			
+		<input type="submit" value="s'inscrire" name="inscription">	
+		<input type="submit" value="Accueil" name="accueil">			
+				
 	</form>
 </body>
 </html>

@@ -39,10 +39,7 @@ public class Modification extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
-		TestSansBDD.init();//TODO pour tests sans BDD seulement
-		
-		
-		
+
 		
 		if(request.getParameter("modification") != null) {
 			
@@ -117,6 +114,8 @@ public class Modification extends HttpServlet {
 	        	response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
 	        }
 
+		}else if(request.getParameter("accueil")!=null) {
+			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
 		}
 	}
 }
