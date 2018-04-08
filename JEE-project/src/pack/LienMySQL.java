@@ -72,7 +72,7 @@ public class LienMySQL {
 		}
 	}
 	
-	public int authentificationUtilisateur(String pseudo, String motDePasse) {
+	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
 		int id;
 		Date date;
@@ -84,7 +84,7 @@ public class LienMySQL {
 				id = resultSet.getInt(1);
 				date = resultSet.getDate("date_naissance");
 				email = resultSet.getString(5);
-				utilisateur = new Utilisateur();
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, date, email);
 			}
 			
 		} catch (SQLException e) {
@@ -92,7 +92,7 @@ public class LienMySQL {
 			e.printStackTrace();
 		}
 		fermerConnections();
-		return id;
+		return utilisateur;
 	}
 	
 	public int insererUtilisateur(Utilisateur utilisateur) {

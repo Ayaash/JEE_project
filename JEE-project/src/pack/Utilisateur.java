@@ -21,6 +21,15 @@ public class Utilisateur {
 		this.courriel = courriel;
 	}
 	
+	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+		this.id = id;
+		this.pseudo = pseudo;
+		this.motDePasse = motDePasse;
+		this.jeuxPreferes = jeuxPreferes;
+		this.dateDeNaissance = dateDeNaissance;
+		this.courriel = courriel;
+	}
+	
 	public void modifiy(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
