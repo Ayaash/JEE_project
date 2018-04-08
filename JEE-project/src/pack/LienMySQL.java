@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class LienMySQL {
 	/**
-	 * TODO: Necessite un serveur MySQL actif avec le mot de passe root = 'root'. Et une database nommée BDD.
+	 * TODO: Necessite un serveur MySQL actif avec le mot de passe root = 'root'. Et une database nommÃ©e BDD.
 	 */
 
 	private String serveur = "jdbc:mysql://localhost:3306/BDD";
