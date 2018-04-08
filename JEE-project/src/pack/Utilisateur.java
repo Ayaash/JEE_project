@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Utilisateur {
 	
+	private int id;
 	private String pseudo;
 	private String motDePasse;
 	private List<Jeux> jeuxPreferes;
@@ -45,5 +46,13 @@ public class Utilisateur {
 	}
 	public List<Jeux> getJeuxPreferes() {
 		return jeuxPreferes;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }
