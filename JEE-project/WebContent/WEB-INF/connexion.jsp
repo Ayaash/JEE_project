@@ -11,7 +11,7 @@
 		<p>Mot de passe: <input type="password" name=mdp>
 		
 		<err> <% if(request.getAttribute("message")!=null){
-			out.println("Le mot de passe est incorrect");
+			out.println(request.getAttribute("message"));
 		} %> </err>
 		
 		</p>

@@ -66,6 +66,22 @@
 		<servlet-name>AdminPartiesEnCours</servlet-name>
 		<url-pattern>/partiesencours</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>AdminPartiesTermine</servlet-name>
+		<servlet-class>servlets.AdminPartiesTermine</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminPartiesTermine</servlet-name>
+		<url-pattern>/partiestermine</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AdminJoueurs</servlet-name>
+		<servlet-class>servlets.AdminJoueurs</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminJoueurs</servlet-name>
+		<url-pattern>/joueurs</url-pattern>
+	</servlet-mapping>
 	
 
 </web-app>

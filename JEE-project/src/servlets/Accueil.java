@@ -74,7 +74,7 @@ public class Accueil extends HttpServlet {
 	    	response.sendRedirect(this.getServletContext().getContextPath()+"/inscription");
 	    }else if(request.getParameter("deconnexion") != null) {
 	    	//Si une partie etait en cours, on y met fin
-	    	if(session.getAttribute("partieencour")!=null) {
+	    	if(session.getAttribute("partieencours")!=null) {
 	    		Partie part=(Partie) session.getAttribute("partieencours");
 		        part.finPartie();
 		        FonctionsUtile.partiesEnCours.remove(part);
@@ -89,6 +89,10 @@ public class Accueil extends HttpServlet {
 	    	response.sendRedirect(this.getServletContext().getContextPath()+"/modifjeux");
 	    }else if(request.getParameter("partcour") != null) {
 	    	response.sendRedirect(this.getServletContext().getContextPath()+"/partiesencours");
+	    }else if(request.getParameter("partterm") != null) {
+	    	response.sendRedirect(this.getServletContext().getContextPath()+"/partiestermine");
+	    }else if(request.getParameter("joueur") != null) {
+	    	response.sendRedirect(this.getServletContext().getContextPath()+"/joueurs");
 	    }
 		
 		

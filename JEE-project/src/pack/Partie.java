@@ -9,8 +9,6 @@ public class Partie {
 	private Utilisateur joueur;
 	private boolean enCours;
 	private Date debut;
-	
-
 	private Date fin;
 
 	
@@ -41,5 +39,8 @@ public class Partie {
 	
 	public Date getDebut() {
 		return debut;
+	}
+	public Date getFin() {
+		return fin;
 	}
 }

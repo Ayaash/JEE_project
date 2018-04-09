@@ -10,7 +10,9 @@ public class Utilisateur {
 	private List<Jeux> jeuxPreferes;
 	private Date dateDeNaissance;
 	private String courriel;
+	private Date dateInscription;
 	private int nbParties;
+	private boolean interdit;
 		
 	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.id = -1;
@@ -19,8 +21,11 @@ public class Utilisateur {
 		this.jeuxPreferes = jeuxPreferes;
 		this.dateDeNaissance = dateDeNaissance;
 		this.courriel = courriel;
+		this.interdit=false;
+		this.dateInscription=new Date();
 	}
 	
+	@Deprecated
 	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.id = id;
 		this.pseudo = pseudo;
@@ -28,6 +33,23 @@ public class Utilisateur {
 		this.jeuxPreferes = jeuxPreferes;
 		this.dateDeNaissance = dateDeNaissance;
 		this.courriel = courriel;
+		this.interdit=false;
+		this.dateInscription=new Date();
+		this.nbParties=0;
+	}
+	
+	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel,boolean interdit, Date dateInscription, int nbParties) {
+		this.id = id;
+		this.pseudo = pseudo;
+		this.motDePasse = motDePasse;
+		this.jeuxPreferes = jeuxPreferes;
+		this.dateDeNaissance = dateDeNaissance;
+		this.courriel = courriel;
+		this.interdit=interdit;
+		this.dateInscription=dateInscription;
+		this.nbParties=nbParties;
+
+
 	}
 	
 	public void modifiy(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
@@ -56,6 +78,26 @@ public class Utilisateur {
 	}
 	public List<Jeux> getJeuxPreferes() {
 		return jeuxPreferes;
+	}
+	
+	public Date getDateInscription() {
+		return dateInscription;
+	}
+
+	public int getNbParties() {
+		return nbParties;
+	}
+	
+	public void jouerPartie() {
+		nbParties+=1;
+	}
+	
+	public boolean estInterdit() {
+		return interdit;
+	}
+	
+	public void changeInterdiction() {
+		interdit=!interdit;
 	}
 
 	public int getId() {
