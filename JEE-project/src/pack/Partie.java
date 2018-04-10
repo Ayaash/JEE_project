@@ -33,7 +33,7 @@ public class Partie {
 		enCours=false;
 		fin=new Date();
 		LienMySQL BDD =LienMySQL.getInstance();
-		//TODO ajouter la sauvegarde dans la BDD
+		BDD.insererPartie(this);
 	}
 	
 	public boolean enCours() {

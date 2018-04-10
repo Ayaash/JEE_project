@@ -242,7 +242,7 @@ public class LienMySQL {
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
-		String requete = "UPDATE utilisateur SET pseudo=\"" + utilisateur.getPseudo() + "\", mdp=\"" + utilisateur.getMotDePasse() + "\", date_naissance=\"" + date + "\", email=\"" + utilisateur.getCourriel() +"\" WHERE id=" + utilisateur.getId() + ";";
+		String requete = "UPDATE utilisateur SET pseudo=\"" + utilisateur.getPseudo() + "\", mdp=\"" + utilisateur.getMotDePasse() + "\", date_naissance=\"" + date + "\", email=\"" + utilisateur.getCourriel() +"\", interdit= " + utilisateur.estInterdit() + " WHERE id=" + utilisateur.getId() + ";";
 		this.executerUpdate(requete);
 		fermerConnections();
 	}

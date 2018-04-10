@@ -87,7 +87,7 @@ public class Utilisateur {
 	}
 	
 	public void changeInterdiction() {
-		interdit=!interdit;
+		interdit= !interdit;
 	}
 
 	public int getId() {

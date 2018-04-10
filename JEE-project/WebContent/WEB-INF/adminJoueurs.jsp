@@ -22,7 +22,7 @@
 </head>
 <body>
 
-<h1>Parties en cours</h1>
+<h1>Modifier la liste des joueurs</h1>
 
 	<form method="post" action=${pageContext.request.contextPath}/joueurs>
 
