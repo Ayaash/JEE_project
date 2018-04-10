@@ -5,8 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,44 +13,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
-import pack.Jeux;
+import pack.Jeu;
 import pack.LienMySQL;
 import pack.Utilisateur;
 
 public class Inscription extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	LienMySQL lien = LienMySQL.getInstance();
 	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
+		LienMySQL BDD=LienMySQL.getInstance();
+		List<Jeu> jeux=BDD.findJeux();
+		request.setAttribute("jeux", jeux);
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/inscription.jsp" ).forward( request, response );
 
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
-		TestSansBDD.init();//TODO pour tests sans BDD seulement
-		LienMySQL BDD=LienMySQL.getInstance();
+		
 		
 		if(request.getParameter("inscription") != null) {
+			LienMySQL BDD=LienMySQL.getInstance();
 			
 			boolean echec=false;//retour a la page d'inscription si true
 			String pseudo=request.getParameter("pseudo");
 			
 			//verification que le pseudo n'est pas deja dans la BDD
-			Utilisateur foundUser=null;
-			//TODO zone a remplacer par la recherche dans BDD
-			Iterator<Utilisateur> iter=TestSansBDD.users.iterator();
-			while(iter.hasNext() && foundUser==null) {
-				Utilisateur u=iter.next();
-				if(pseudo.equals(u.getPseudo())) {
-					foundUser=u;
-				}
-			}
-			//TODO }fin de la zone a modifier
-			
-			if(foundUser!=null) {
+
+			if(BDD.pseudopris(pseudo)) {
 				request.setAttribute("msgpseudo", "Ce pseudo est deja utilis�");
 				echec=true;
 			}
@@ -76,15 +71,7 @@ public class Inscription extends HttpServlet {
 
 			
 			String courriel=request.getParameter("mail");
-			LinkedList<Jeux> jeux=new LinkedList<Jeux>();
-			//Creation de la liste de jeux
-			
-			for(int i=0;i<Jeux.values().length;i++){
-				String jeu=Jeux.values()[i].toString();
-				if(request.getParameter(jeu) != null) {
-					jeux.add(Jeux.valueOf(jeu));
-				}
-			}
+			List<Jeu> jeux=BDD.findJeux();
 
 	        
 	        if(echec) {
@@ -93,8 +80,8 @@ public class Inscription extends HttpServlet {
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
 
-				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donn�e
-				BDD.insererUtilisateur(u);
+				int id=BDD.insererUtilisateur(u);
+				u.setId(id);//On doit connaitre l'id de l'utilisateur (au cas ou)
 				
 				//On ouvre la session de l'utilisateur
 		        HttpSession session = request.getSession();

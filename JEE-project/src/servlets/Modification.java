@@ -5,8 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,13 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
-import pack.Jeux;
+import pack.Jeu;
+import pack.LienMySQL;
 import pack.Utilisateur;
 
 public class Modification extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		
@@ -30,6 +34,9 @@ public class Modification extends HttpServlet {
 			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
         }else {
 			//La session correspondant a un utilisateur ou  un admin
+        	LienMySQL BDD=LienMySQL.getInstance();
+    		List<Jeu> jeux=BDD.findJeux();
+    		request.setAttribute("jeux", jeux);
         	this.getServletContext().getRequestDispatcher( "/WEB-INF/modification.jsp" ).forward( request, response );
        }
 		
@@ -42,6 +49,7 @@ public class Modification extends HttpServlet {
 
 		
 		if(request.getParameter("modification") != null) {
+			LienMySQL BDD=LienMySQL.getInstance();
 			
 			HttpSession session = request.getSession();//On recupere la session courante pour verifier
 			
@@ -53,21 +61,10 @@ public class Modification extends HttpServlet {
 			boolean echec=false;//retour a la page d'inscription si true
 			String pseudo=request.getParameter("pseudo");
 			//verification que le pseudo n'est pas deja dans la BDD
-			Utilisateur foundUser=null;
-			//TODO zone a remplacer par la recherche dans BDD
-			Iterator<Utilisateur> iter=TestSansBDD.users.iterator();
-			while(iter.hasNext() && foundUser==null) {
-				Utilisateur u=iter.next();
-				System.out.println(u.getDateDeNaissance());
-				if(pseudo.equals(u.getPseudo()) 
-					&& !(pseudo.equals(currentUser.getPseudo()))) {//On autorise la conservation de son pseudo
-					
-					foundUser=u;
-				}
-			}
-			//TODO }fin de la zone a modifier
 			
-			if(foundUser!=null) {
+
+			
+			if(BDD.pseudopris(pseudo)) {
 				request.setAttribute("msgpseudo", "Ce pseudo est deja utilisé");
 				echec=true;
 			}
@@ -90,15 +87,9 @@ public class Modification extends HttpServlet {
 			}
 			
 			String courriel=request.getParameter("mail");
-			LinkedList<Jeux> jeux=new LinkedList<Jeux>();
+			List<Jeu> jeux=BDD.findJeux();
 			//Creation de la liste de jeux
 			
-			for(int i=0;i<Jeux.values().length;i++){
-				String jeu=Jeux.values()[i].toString();
-				if(request.getParameter(jeu) != null) {
-					jeux.add(Jeux.valueOf(jeu));
-				}
-			}
 
 	        
 	        if(echec) {
@@ -106,10 +97,8 @@ public class Modification extends HttpServlet {
 	        }else{
 	        	//creation de l'utilisateur
 
-				//TODO modification de l'utilisateur dans la base de donnée{
-	        	int i=TestSansBDD.users.indexOf(currentUser);
-	        	TestSansBDD.users.get(i).modifiy(pseudo, motDePasse, jeux, dateDeNaissance, courriel);;
-	        	//TODO }
+	        	currentUser.modifiy(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
+	        	BDD.modifierUtilisateur(currentUser);
 
 	        	response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
 	        }
