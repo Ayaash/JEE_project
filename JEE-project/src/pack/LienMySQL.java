@@ -121,7 +121,7 @@ public class LienMySQL {
 					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
 					jeux.add(jeu);
 				}
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, date, email);
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
 				
 				
 			}
@@ -254,15 +254,44 @@ public class LienMySQL {
      	fermerConnections();
 	}
 	
-	public List<Jeu> recuppref(int id){
+	public void majjeuliste(List<Jeu> l) {
+		Jeu j;
+		int taille = l.size();
+		
+		for(int i=0; i<taille;i++) {
+			j=l.get(i);
+			majjeu(j,j.isAutorise());
+		}
+	}
+	
+	//fonction des parties
+	public List<Partie> findParties() {
 		getConnection();
 		
-		List<Jeu> listJeu = new ArrayList<Jeu>();
+		List<Partie> listpart = new ArrayList<Partie>();
 		
-		
-		
-		fermerConnections();
-		return listJeu;
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM partie");
+			while (resultSet.next()) {
+					int idu = resultSet.getInt("jouer");
+					int idj = resultSet.getInt("jeu");					
+					Date debut=resultSet.getDate("date_debut");
+					Date fin=resultSet.getDate("date_fin");
+					Partie p = new Partie(null, null, debut,fin);
+					
+					listpart.add(p);
+			}
+			
+		} catch (Exception e) {
+			// sert à afficher les potentielles erreurs
+			e.printStackTrace();
+
+		} finally {
+			fermerConnections();
+		}
+		return listpart;
+
 	}
 
 }

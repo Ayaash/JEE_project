@@ -3,20 +3,30 @@ package pack;
 import java.util.Date;
 import java.util.List;
 
+import pack.Jeu;
+
 public class Partie {
 	
-	private Jeux jeu;
+	private pack.Jeu jeu;
 	private Utilisateur joueur;
 	private boolean enCours;
 	private Date debut;
 	private Date fin;
 
 	
-	public Partie(Utilisateur joueur,Jeux jeu ) {
+	public Partie(Utilisateur joueur,Jeu jeu2 ) {
 		this.joueur=joueur;
-		this.jeu=jeu;
+		this.jeu=jeu2;
 		enCours=true;
 		debut=new Date();
+	}
+	
+	public Partie(Utilisateur joueur,Jeu jeu, Date debut, Date fin) {
+		this.joueur=joueur;
+		this.jeu=jeu;
+		enCours=false;
+		this.debut=debut;
+		this.fin=fin;
 	}
 	
 	public void finPartie() {
@@ -29,7 +39,7 @@ public class Partie {
 		return enCours;
 	}
 	
-	public Jeux getJeu() {
+	public Jeu getJeu() {
 		return jeu;
 	}
 	

@@ -1,28 +1,25 @@
 package servlets;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
-import pack.Jeux;
+import pack.Jeu;
 import pack.LienMySQL;
-import pack.Utilisateur;
 
 public class AdminModifJeux extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	LienMySQL lien = LienMySQL.getInstance();
 	
 	@Override
@@ -34,7 +31,9 @@ public class AdminModifJeux extends HttpServlet {
 			response.sendRedirect(this.getServletContext().getContextPath()+"/Accueil");
         }else {
 			//La session correspond a un admin
-        	request.setAttribute("jeuxdispo", TestSansBDD.jeuxDispo);//TODO a remplacer par la liste venant de la BDD
+        	LienMySQL BDD=LienMySQL.getInstance();
+    		List<Jeu> jeux=BDD.findJeux();
+        	request.setAttribute("jeuxdispo", jeux);
         	this.getServletContext().getRequestDispatcher( "/WEB-INF/adminModifJeux.jsp" ).forward( request, response );
        }
 		
@@ -47,19 +46,19 @@ public class AdminModifJeux extends HttpServlet {
 
 		
 		if(request.getParameter("confirmer") != null) {
-			
+			LienMySQL BDD=LienMySQL.getInstance();
+    		List<Jeu> jeux=BDD.findJeux();
+        	request.setAttribute("jeuxdispo", jeux);
 	
-			//Creation de la liste de jeux
-			LinkedList<Jeux> jeux=new LinkedList<Jeux>();
 
-			for(int i=0;i<Jeux.values().length;i++){
-				String jeu=Jeux.values()[i].toString();
+			for(int i=0;i<jeux.size();i++){
+				String jeu=jeux.get(i).toString();
 				if(request.getParameter(jeu) != null) {
-					jeux.add(Jeux.valueOf(jeu));
+					jeux.add(jeux.get(i));
 				}
 			}
-			TestSansBDD.jeuxDispo=jeux;//TODO remplacer par BDD
-
+			//TestSansBDD.jeuxDispo=jeux;//TODO remplacer par BDD
+			BDD.modifieAutorizedJeux(jeux);//TODO gerer avec la BDD
 	        
 	      
 

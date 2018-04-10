@@ -4,11 +4,8 @@
 <html>
 <head>
 
-	<%@ page import="pack.Jeux" %>
-	<%@ page import="pack.Utilisateur" %>
 	<%@ page import="pack.Partie" %>
 	
-	<%@ page import="pack.FonctionsUtile" %>
 	
 	<%@ page import="java.util.List" %>
 	<%@ page import="java.util.Iterator" %>
