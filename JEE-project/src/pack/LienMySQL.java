@@ -149,9 +149,35 @@ public class LienMySQL {
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
 		String requete = "UPDATE utilisateur SET pseudo=" + utilisateur.getPseudo() + ", mdp=" + utilisateur.getMotDePasse() + ", date_naissance=" + date + ", email=" + utilisateur.getCourriel() +" WHERE id=" + utilisateur.getId() + ";";
-		this.executerUpdate(requete);
+		this.executerRequete(requete);
 		fermerConnections();
 	}
+	
+	
+	//retourne true si le pseudonyme passéen parametre est pris
+	public boolean pseudopris(String pseud) {
+		boolean result=false;
+		
+		getConnection();
+		
+		String requete="Select * FROM utilisateur where pseudo="+pseud;
+		this.executerRequete(requete);
+		
+		try {
+			if(resultSet.next()) {
+				result=true;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		fermerConnections();
+		return result;
+	}
+	
+	//fonctions liees au jeux
 	
 	public void insererJeu(int id, String nom) throws SQLException {
 		getConnection();
