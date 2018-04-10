@@ -379,6 +379,8 @@ public class LienMySQL {
 		}
 	}
 	
+	
+	
 	//fonction des parties
 	public List<Partie> findParties() {
 		getConnection();
@@ -419,6 +421,23 @@ public class LienMySQL {
 		}
 		return listpart;
 
+	}
+	
+	public int insererPartie(Partie p) {
+		getConnection();
+		int id = -1;
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String debut = sdf.format(p.getDebut());
+		String fin = sdf.format(p.getFin());
+		
+		String requete = "INSERT INTO partie VALUE (DEFAULT, \"" + p.getJoueur().getId() + "\", \"" + p.getJeu().getId() + "\",\"" + debut + "\", \"" + fin + "\");";
+		this.executerUpdate(requete);
+		
+
+		fermerConnections();
+		
+		
+		return id;		
 	}
 
 }
