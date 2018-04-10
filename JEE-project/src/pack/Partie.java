@@ -32,6 +32,7 @@ public class Partie {
 	public void finPartie() {
 		enCours=false;
 		fin=new Date();
+		LienMySQL BDD =LienMySQL.getInstance();
 		//TODO ajouter la sauvegarde dans la BDD
 	}
 	
