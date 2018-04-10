@@ -54,7 +54,7 @@
 						nbPart+=1;
 					}
 				}
-				out.println("<p>  "+jeu.toString()+" ("+nbPart+" parties en cours) <input type='submit' name='"+jeu.toString()+"' value='jouer!' > </p>");
+				out.println("<p>  "+jeu.getNom()+" ("+nbPart+" parties en cours) <input type='submit' name='"+jeu.getNom()+"' value='jouer!' > </p>");
 			}
 		}else{
 			request.getSession().setAttribute("partieencours",isInPart);

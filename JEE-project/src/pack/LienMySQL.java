@@ -45,7 +45,7 @@ public class LienMySQL {
 		} 
 
 		try {
-			connection =  DriverManager.getConnection(serveur, "root", "");
+			connection =  DriverManager.getConnection(serveur, "root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
