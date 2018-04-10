@@ -96,22 +96,6 @@ public class LienMySQL {
 		}
 	}
 	
-	//tentative avec executeUpdate.
-	private void executerUpdate(String requete) {
-		String retour = null;
-		try {
-			statement = connection.createStatement();
-			int entier = statement.executeUpdate(requete);
-			
-			retour = resultSet.toString();
-			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
-
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
