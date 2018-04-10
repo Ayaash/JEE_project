@@ -42,6 +42,12 @@ CREATE TABLE jeu (
 	PRIMARY KEY(id)
 );
 
+CREATE TABLE preference(
+	iduser INT NOT NULL;
+	idjeu INT NOT NULL;
+
+);
+
 CREATE TABLE partie (
 	id INT NOT NULL AUTO_INCREMENT,
 	joueur INT NOT NULL,

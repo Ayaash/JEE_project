@@ -97,16 +97,17 @@ public class LienMySQL {
 	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
 		int id;
-		Date date;
+		Date daten;
 		String email;
 		List<Jeu> jeux;
+		Date datei;
+		Boolean interdit;
+		int nbParties;
 		Utilisateur utilisateur = null;
 		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
 		try {
 			if(resultSet.next()) {
 				id = resultSet.getInt(1);
-				date = resultSet.getDate("date_naissance");
-				email = resultSet.getString(5);
 				jeux = new ArrayList<Jeu>();
 				Jeu jeu;
 				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
@@ -116,12 +117,18 @@ public class LienMySQL {
 				}
 				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, date, email);
 				
+				daten = resultSet.getDate("date_naissance");
+				email = resultSet.getString("email");
+				interdit=resultSet.getBoolean("interdit");
+				nbParties=resultSet.getInt("nbparties");
+				datei=resultSet.getDate("date-inscription");
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, daten, email, interdit, datei, nbParties);
 			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 		fermerConnections();
 		return utilisateur;
 	}
@@ -151,6 +158,8 @@ public class LienMySQL {
 		}
 
 		fermerConnections();
+		
+		
 		return id;		
 	}
 	
@@ -172,7 +181,7 @@ public class LienMySQL {
 		
 		getConnection();
 		
-		String requete="Select * FROM utilisateur where pseudo="+pseud;
+		String requete="Select * FROM utilisateur where pseudo="+pseud+";";
 		this.executerRequete(requete);
 		
 		try {
@@ -242,6 +251,17 @@ public class LienMySQL {
      	rowsUpdated = stat.executeUpdate();
      	
      	fermerConnections();
+	}
+	
+	public List<Jeu> recuppref(int id){
+		getConnection();
+		
+		List<Jeu> listJeu = new ArrayList<Jeu>();
+		
+		
+		
+		fermerConnections();
+		return listJeu;
 	}
 
 }
