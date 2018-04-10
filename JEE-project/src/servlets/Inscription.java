@@ -32,6 +32,8 @@ public class Inscription extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
 		TestSansBDD.init();//TODO pour tests sans BDD seulement
+		LienMySQL BDD=LienMySQL.getInstance();
+		
 		if(request.getParameter("inscription") != null) {
 			
 			boolean echec=false;//retour a la page d'inscription si true
@@ -91,7 +93,7 @@ public class Inscription extends HttpServlet {
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
 
-				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donn�e
+				BDD.insererUtilisateur(u);//TODO peut etre modifier l'insertion
 				
 				//On ouvre la session de l'utilisateur
 		        HttpSession session = request.getSession();
