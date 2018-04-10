@@ -2,10 +2,13 @@
     pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-	<%@ page import="pack.Jeux" %>
+	<%@ page import="pack.Jeu" %>
 	<%@ page import="pack.Utilisateur" %>
 	<%@ page import="java.util.Date" %>
 	<%@ page import="java.text.SimpleDateFormat" %>
+	
+		<%@ page import="java.util.List" %>
+	
 	
 	<style><%@include file="/WEB-INF/css/style.css"%></style>
 	<title>Modification</title>
@@ -44,14 +47,11 @@
 		<p>Courriel: <input type="email" name="mail" value=<%= user.getCourriel() %> required></p>
 		
 		<p>Jeux préférés:</p>
-		<% for(int i=0;i<Jeux.values().length;i++){
-			String jeu=Jeux.values()[i].toString();
-			if(user.getJeuxPreferes().contains(Jeux.values()[i])){
-				out.println("<p>    <input type='checkbox' name='"+jeu+"' checked=checked > "+jeu+"</p>");
-
-			}else{
-				out.println("<p>    <input type='checkbox' name='"+jeu+"'> "+jeu+"</p>");
-			}
+		<%
+		List<Jeu> jeux=(List<Jeu>) request.getAttribute("jeux");
+		for(int i=0;i<jeux.size();i++){
+			String jeu=jeux.get(i).toString();
+			out.println("<p>    <input type='checkbox' name='"+jeu+"'> "+jeu+"</p>");
 		}%>
 
 		

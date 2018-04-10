@@ -2,7 +2,10 @@
     pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-	<%@ page import="pack.Jeux" %>
+	<%@ page import="pack.Jeu" %>
+	
+	<%@ page import="java.util.List" %>
+	
 	
 	<style><%@include file="/WEB-INF/css/style.css"%></style>
 	<title>Inscription</title>
@@ -33,8 +36,10 @@
 		<p>Courriel: <input type="email" name="mail" required></p>
 		
 		<p>Jeux préférés:</p>
-		<% for(int i=0;i<Jeux.values().length;i++){
-			String jeu=Jeux.values()[i].toString();
+		<%
+		List<Jeu> jeux=(List<Jeu>) request.getAttribute("jeux");
+		for(int i=0;i<jeux.size();i++){
+			String jeu=jeux.get(i).toString();
 			out.println("<p>    <input type='checkbox' name='"+jeu+"'> "+jeu+"</p>");
 		}%>
 

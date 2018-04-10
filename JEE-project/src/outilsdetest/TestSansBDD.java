@@ -22,8 +22,8 @@ public class TestSansBDD {
 			jeuxDispo.add(Jeux.FightShip);
 
 			Date d= new Date(12222);
-			users.add(new Admin("admin", "admin", new LinkedList<Jeux>(), d, "admin@test.com"));
-			users.add(new Utilisateur("user", "user", new LinkedList<Jeux>(), d, "user@test.com"));
+			users.add(new Admin("admin", "admin", new LinkedList<Jeu>(), d, "admin@test.com"));
+			users.add(new Utilisateur("user", "user", new LinkedList<Jeu>(), d, "user@test.com"));
 		initialized=true;
 		}
 	}
