@@ -42,6 +42,16 @@ CREATE TABLE jeu (
 	PRIMARY KEY(id)
 );
 
+INSERT INTO jeu (
+	id,
+	nom,
+	autorise)
+	VALUES(
+	DEFAULT,
+	"Le jeu",
+	true,
+);
+
 CREATE TABLE preference(
 	iduser INT NOT NULL;
 	idjeu INT NOT NULL;

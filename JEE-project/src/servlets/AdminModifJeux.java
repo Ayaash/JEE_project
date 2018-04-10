@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -57,8 +57,11 @@ public class AdminModifJeux extends HttpServlet {
 					jeux.add(jeux.get(i));
 				}
 			}
-			//TestSansBDD.jeuxDispo=jeux;//TODO remplacer par BDD
-			BDD.modifieAutorizedJeux(jeux);//TODO gerer avec la BDD
+			try {
+				BDD.majjeuliste(jeux);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	        
 	      
 

@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
-
 public class FonctionsUtile {
 	
 	public static List<Partie> partiesEnCours=new LinkedList<Partie>();

@@ -52,7 +52,7 @@ public class AdminJoueurs extends HttpServlet {
 
 			}
 		}
-		BDD.modifyAllUtilisateurs//TODO modifier la BDD
+		BDD.modifyAllUtilisateurs(utilisateur)//TODO modifier la BDD
 	
 		//Bouton accueil
 		if(request.getParameter("accueil")!=null) {
