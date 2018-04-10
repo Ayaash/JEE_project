@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
 import pack.Jeu;
 import pack.LienMySQL;
 import pack.Utilisateur;
@@ -47,18 +45,8 @@ public class Inscription extends HttpServlet {
 			String pseudo=request.getParameter("pseudo");
 			
 			//verification que le pseudo n'est pas deja dans la BDD
-			Utilisateur foundUser=null;
-			//TODO zone a remplacer par la recherche dans BDD
-			Iterator<Utilisateur> iter=TestSansBDD.users.iterator();
-			while(iter.hasNext() && foundUser==null) {
-				Utilisateur u=iter.next();
-				if(pseudo.equals(u.getPseudo())) {
-					foundUser=u;
-				}
-			}
-			//TODO }fin de la zone a modifier
-			
-			if(foundUser!=null) {
+
+			if(BDD.pseudopris(pseudo)) {
 				request.setAttribute("msgpseudo", "Ce pseudo est deja utilis�");
 				echec=true;
 			}
@@ -92,7 +80,8 @@ public class Inscription extends HttpServlet {
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
 
-				BDD.insererUtilisateur(u);
+				int id=BDD.insererUtilisateur(u);
+				u.setId(id);//On doit connaitre l'id de l'utilisateur (au cas ou)
 				
 				//On ouvre la session de l'utilisateur
 		        HttpSession session = request.getSession();

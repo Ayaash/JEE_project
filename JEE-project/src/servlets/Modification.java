@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
 import pack.Jeu;
@@ -63,20 +61,10 @@ public class Modification extends HttpServlet {
 			boolean echec=false;//retour a la page d'inscription si true
 			String pseudo=request.getParameter("pseudo");
 			//verification que le pseudo n'est pas deja dans la BDD
-			Utilisateur foundUser=null;
-			//TODO zone a remplacer par la recherche dans BDD
-			Iterator<Utilisateur> iter=TestSansBDD.users.iterator();
-			while(iter.hasNext() && foundUser==null) {
-				Utilisateur u=iter.next();
-				if(pseudo.equals(u.getPseudo()) 
-					&& !(pseudo.equals(currentUser.getPseudo()))) {//On autorise la conservation de son pseudo
-					
-					foundUser=u;
-				}
-			}
-			//TODO }fin de la zone a modifier
 			
-			if(foundUser!=null) {
+
+			
+			if(BDD.pseudopris(pseudo)) {
 				request.setAttribute("msgpseudo", "Ce pseudo est deja utilisé");
 				echec=true;
 			}
@@ -109,12 +97,8 @@ public class Modification extends HttpServlet {
 	        }else{
 	        	//creation de l'utilisateur
 
-				//TODO modification de l'utilisateur dans la base de donnée{
-	        	//int i=TestSansBDD.users.indexOf(currentUser);
-	        	//TestSansBDD.users.get(i).modifiy(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
-	        	foundUser.modifiy(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
-	        	BDD.modifierUtilisateur(foundUser);
-	        	//TODO }
+	        	currentUser.modifiy(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
+	        	BDD.modifierUtilisateur(currentUser);
 
 	        	response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
 	        }
