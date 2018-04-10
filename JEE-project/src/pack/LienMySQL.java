@@ -148,7 +148,7 @@ public class LienMySQL {
 		Utilisateur utilisateur = null;
 		String pseudo;
 		String motDePasse;
-		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
+		executerRequete("SELECT * FROM utilisateur;");
 		ResultSet rs=resultSet;
 		try {
 			if(rs.next()) {
