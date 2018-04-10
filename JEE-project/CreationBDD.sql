@@ -26,12 +26,6 @@ CREATE TABLE jeu (
 );
 
 
-CREATE TABLE preference(
-	iduser INT NOT NULL;
-	idjeu INT NOT NULL;
-
-);
-
 CREATE TABLE partie (
 	id INT NOT NULL AUTO_INCREMENT,
 	joueur INT NOT NULL,
@@ -56,31 +50,37 @@ CREATE TABLE jeuxFavoris (
 );
 
 
-INSERT INTO utilisateur (
-	id,
-	pseudo,
-	mdp,
-	date_naissance,
-	email,
-	isAdmin)
+INSERT INTO utilisateur
 	VALUES(
 	DEFAULT,
 	"chef",
 	"boss",
-	1990-01-01,
-	2018-04-01,
+	"1990-01-01",
+	"2018-04-01",
+	0,
 	"boss@chef.com",
 	false,
 	true
 );
 
-INSERT INTO jeu (
-	id,
-	nom,
-	autorise)
+INSERT INTO jeu
 	VALUES(
 	DEFAULT,
 	"Le jeu",
+	true
+);
+
+
+INSERT INTO utilisateur
+	VALUES(
+	DEFAULT,
+	"admin",
+	"admin",
+	"1970-01-01",
+	"1970-01-02",
+	0,
+	"trash@ayaash.me",
 	true,
+	false
 );
 
