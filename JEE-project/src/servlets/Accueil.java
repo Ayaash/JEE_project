@@ -63,7 +63,7 @@ public class Accueil extends HttpServlet {
   			Iterator<Jeu> iter=list.iterator();
   			while(iter.hasNext()){
   				Jeu jeu=iter.next();
-  				if(request.getParameter(jeu.toString())!=null) {
+  				if(request.getParameter(jeu.getNom())!=null) {
   					//On a selectionne un jeu, on est redirige vers la page de jeu
   			        session.setAttribute("jeu", jeu);
   					response.sendRedirect(this.getServletContext().getContextPath()+"/jeu");
