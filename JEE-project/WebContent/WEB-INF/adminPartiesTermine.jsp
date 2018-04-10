@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<h1>Parties en cours</h1>
+<h1>Parties terminées</h1>
 
 	<form method="post" action=${pageContext.request.contextPath}/partiestermine>
 
