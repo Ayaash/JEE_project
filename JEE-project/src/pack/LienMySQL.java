@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 
 
 
@@ -45,7 +47,7 @@ public class LienMySQL {
 		} 
 
 		try {
-			connection =  DriverManager.getConnection(serveur, "root", "");
+			connection =  DriverManager.getConnection(serveur, "root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,39 +64,40 @@ public class LienMySQL {
 	}
 
 	
-	private void executerRequete(String requete) {
-		String retour = null;
+	private ResultSet executerRequete(String requete) {;
+		ResultSet rs = null;
+		java.sql.Statement stat = null;
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(requete);
-			
-			retour = resultSet.toString();
-			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
-
-
+			stat = connection.createStatement();
+			rs = stat.executeQuery(requete);
+			return rs;
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("wow");
 			e.printStackTrace();
 		}
+		return null;
 	}
-	private void executerUpdate(String requete) {
-		String retour = null;
+	private int executerUpdate(String requete) {
+		java.sql.Statement stat = null;
+		int retour = 0;
 		try {
-			statement = connection.createStatement();
-			resultInt = statement.executeUpdate(requete);
-			
-			retour = resultSet.toString();
-			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
-
+			stat = connection.createStatement();
+			retour = stat.executeUpdate(requete);
+			stat.close();
+			return retour;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return -1;
 	}
 	
 	
 	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
+		System.out.println(motDePasse);
 		getConnection();
 		int id;
 		Date daten;
@@ -104,31 +107,35 @@ public class LienMySQL {
 		Boolean interdit;
 		int nbParties;
 		Utilisateur utilisateur = null;
-		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
+		ResultSet rs = executerRequete("SELECT * FROM utilisateur WHERE pseudo=\"" + pseudo + "\" AND mdp=\"" + motDePasse + "\";");
 		try {
-			if(resultSet.next()) {
-				id = resultSet.getInt(1);
+			if(rs.next()) {
+				System.out.println(rs.getString("mdp"));
+				id = rs.getInt(1);
 				jeux = new ArrayList<Jeu>();
 				Jeu jeu;
-				daten = resultSet.getDate("date_naissance");
-				email = resultSet.getString("email");
-				interdit=resultSet.getBoolean("interdit");
-				nbParties=resultSet.getInt("nbparties");
-				datei=resultSet.getDate("date-inscription");
-				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
-				while(this.resultSet.next()) {
-					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
+				daten = rs.getDate("date_naissance");
+				email = rs.getString("email");
+				interdit=rs.getBoolean("interdit");
+				nbParties=rs.getInt("nbparties");
+				datei=rs.getDate("date_inscription");
+				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id + ";");
+				while(rs.next()) {
+					jeu = new Jeu(rs.getInt("id"), rs.getString("nom"), rs.getBoolean("autorise"));
 					jeux.add(jeu);
 				}
+				System.out.println("wow");
 				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
 				
 				
 			}
+			rs.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}	
+		;
 		fermerConnections();
 		return utilisateur;
 	}
@@ -148,30 +155,31 @@ public class LienMySQL {
 		Utilisateur utilisateur = null;
 		String pseudo;
 		String motDePasse;
-		executerRequete("SELECT * FROM utilisateur;");
-		ResultSet rs=resultSet;
+		ResultSet rs1 = executerRequete("SELECT * FROM utilisateur;");
+		ResultSet rs2=null;
 		try {
-			if(rs.next()) {
-				id = rs.getInt(1);
-				pseudo=rs.getString("pseudo");
-				motDePasse=rs.getString("mdp");
+			if(rs1.next()) {
+				id = rs1.getInt(1);
+				pseudo=rs1.getString("pseudo");
+				motDePasse=rs1.getString("mdp");
 				jeux = new ArrayList<Jeu>();
 				Jeu jeu;
-				daten = rs.getDate("date_naissance");
-				email = rs.getString("email");
-				interdit=rs.getBoolean("interdit");
-				nbParties=rs.getInt("nbparties");
-				datei=rs.getDate("date-inscription");
-				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
-				while(this.resultSet.next()) {
-					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
+				daten = rs1.getDate("date_naissance");
+				email = rs1.getString("email");
+				interdit=rs1.getBoolean("interdit");
+				nbParties=rs1.getInt("nbparties");
+				datei=rs1.getDate("date-inscription");
+				rs2 = executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id + ";");
+				while(rs2.next()) {
+					jeu = new Jeu(rs2.getInt("id"), rs2.getString("nom"), rs2.getBoolean("autorise"));
 					jeux.add(jeu);
 				}
 				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
 				
 				listu.add(utilisateur);
 			}
-			
+			rs1.close();
+			rs2.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,18 +189,21 @@ public class LienMySQL {
 	}
 	
 	public int insererUtilisateur(Utilisateur utilisateur) {
+		System.out.println("WOW");
 		getConnection();
 		int id = -1;
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = sdf.format(utilisateur.getDateDeNaissance());
+		String dateIns = sdf.format(utilisateur.getDateInscription());
 		
-		String requete = "INSERT INTO utilisateur VALUE (" + utilisateur.getPseudo() + ", " + utilisateur.getMotDePasse() + ", " + date + ", " + utilisateur.getCourriel() + ", false);";
+		String requete = "INSERT INTO utilisateur VALUE (DEFAULT, \"" + utilisateur.getPseudo() + "\", \"" + utilisateur.getMotDePasse() + "\",\"" + date + "\", \"" + dateIns + "\", "+ 0 + ", \"" + utilisateur.getCourriel() + "\", false, false);";
 		this.executerUpdate(requete);
-		requete = "SELECT id FROM utilisateur WHERE  pseudo=" + utilisateur.getPseudo() + " AND email= "  + utilisateur.getCourriel() + ";" ;
-		this.executerRequete(requete);
+		requete = "SELECT id FROM utilisateur WHERE  pseudo=\"" + utilisateur.getPseudo() + "\" AND email= \""  + utilisateur.getCourriel() + "\";" ;
+		ResultSet rs = this.executerRequete(requete);
 		try {
-			resultSet.next();
-			id = resultSet.getInt(1);
+			rs.next();
+			id = rs.getInt("id");
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,8 +229,8 @@ public class LienMySQL {
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
-		String requete = "UPDATE utilisateur SET pseudo=" + utilisateur.getPseudo() + ", mdp=" + utilisateur.getMotDePasse() + ", date_naissance=" + date + ", email=" + utilisateur.getCourriel() +" WHERE id=" + utilisateur.getId() + ";";
-		this.executerRequete(requete);
+		String requete = "UPDATE utilisateur SET pseudo=\"" + utilisateur.getPseudo() + "\", mdp=\"" + utilisateur.getMotDePasse() + "\", date_naissance=\"" + date + "\", email=\"" + utilisateur.getCourriel() +"\" WHERE id=" + utilisateur.getId() + ";";
+		this.executerUpdate(requete);
 		fermerConnections();
 	}
 	
@@ -240,13 +251,14 @@ public class LienMySQL {
 		
 		getConnection();
 		
-		String requete="Select * FROM utilisateur where pseudo="+pseud+";";
-		this.executerRequete(requete);
+		String requete="Select * FROM utilisateur where pseudo=\""+pseud+"\";";
+		ResultSet rs = this.executerRequete(requete);
 		
 		try {
-			if(resultSet.next()) {
+			if(rs.next()) {
 				result=true;
 			}
+			rs.close();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -274,18 +286,21 @@ public class LienMySQL {
 	
 	public List<Jeu> findJeux() {
 		getConnection();
-		
+		java.sql.Statement stat = null;
+		ResultSet rs = null;
 		List<Jeu> listJeu = new ArrayList<Jeu>();
 		
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM jeu;");
-			while (resultSet.next()) {
-					int id = resultSet.getInt("id");
-					String nom = resultSet.getString("nom");
-					Boolean autorise = resultSet.getBoolean("autorise");
+			stat = connection.createStatement();
+			rs = stat.executeQuery("SELECT * FROM jeu;");
+			while (rs.next()) {
+					int id = rs.getInt("id");
+					String nom = rs.getString("nom");
+					Boolean autorise = rs.getBoolean("autorise");
 					listJeu.add(new Jeu(id, nom, autorise));
 			}
+			rs.close();
+			stat.close();
 			
 		} catch (Exception e) {
 			// sert à afficher les potentielles erreurs
@@ -300,24 +315,27 @@ public class LienMySQL {
 	
 	public List<Jeu> findJeuxautorise() {
 		getConnection();
-		
+		java.sql.Statement stat = null;
+		ResultSet rs = null;
 		List<Jeu> listJeu = new ArrayList<Jeu>();
 		
 		try {
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM jeu where interdit=false;");
-			while (resultSet.next()) {
-					int id = resultSet.getInt("id");
-					String nom = resultSet.getString("nom");
-					Boolean autorise = resultSet.getBoolean("autorise");
+			stat = connection.createStatement();
+			rs = stat.executeQuery("SELECT * FROM jeu where autorise=true;");
+			while (rs.next()) {
+					int id = rs.getInt("id");
+					String nom = rs.getString("nom");
+					Boolean autorise = rs.getBoolean("autorise");
 					listJeu.add(new Jeu(id, nom, autorise));
 			}
-			
+			rs.close();
+			stat.close();
 		} catch (Exception e) {
 			// sert à afficher les potentielles erreurs
 			e.printStackTrace();
 
 		} finally {
+			
 			fermerConnections();
 		}
 		return listJeu;
@@ -334,7 +352,7 @@ public class LienMySQL {
      	stat.setBoolean(1, status);;
      	stat.setInt(2, id);
      	rowsUpdated = stat.executeUpdate();
-     	
+     	stat.close();
      	fermerConnections();
 	}
 	
@@ -351,24 +369,27 @@ public class LienMySQL {
 	//fonction des parties
 	public List<Partie> findParties() {
 		getConnection();
-		
+		java.sql.Statement stat = null;
+		ResultSet rs = null;
 		List<Partie> listpart = new ArrayList<Partie>();
 		
 		try {
-			statement = connection.createStatement();
-			ResultSet res = statement.executeQuery("SELECT * FROM partie");
-			while (res.next()) {
-					int idu = res.getInt("jouer");
-					int idj = res.getInt("jeu");					
-					Date debut=res.getDate("date_debut");
-					Date fin=res.getDate("date_fin");
-					executerRequete("SELECT * From utilisateur WHERE id=" + idu+";");
-					Utilisateur u = authentificationUtilisateur(resultSet.getString("pseudo"), resultSet.getString("mdp"));
-					executerRequete("SELECT * From jeu WHERE id=" + idj+";");
+			stat = connection.createStatement();
+			rs = stat.executeQuery("SELECT * FROM partie");
+			while (rs.next()) {
+					int idu = rs.getInt("jouer");
+					int idj = rs.getInt("jeu");					
+					Date debut=rs.getDate("date_debut");
+					Date fin=rs.getDate("date_fin");
+					rs.close();
+					rs = executerRequete("SELECT * From utilisateur WHERE id=" + idu+";");
+					Utilisateur u = authentificationUtilisateur(rs.getString("pseudo"), rs.getString("mdp"));
+					rs.close();
+					rs = executerRequete("SELECT * From jeu WHERE id=" + idj+";");
 					
-					int id = resultSet.getInt("id");
-					String nom = resultSet.getString("nom");
-					Boolean autorise = resultSet.getBoolean("autorise");
+					int id = rs.getInt("id");
+					String nom = rs.getString("nom");
+					Boolean autorise = rs.getBoolean("autorise");
 					Jeu j=(new Jeu(id, nom, autorise));
 					
 					Partie p = new Partie(u, j, debut,fin);
