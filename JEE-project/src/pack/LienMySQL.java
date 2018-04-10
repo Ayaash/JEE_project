@@ -4,13 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.mysql.jdbc.PreparedStatement;
 
 
 
@@ -102,6 +99,7 @@ public class LienMySQL {
 		int id;
 		Date date;
 		String email;
+		List<Jeu> jeux;
 		Utilisateur utilisateur = null;
 		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
 		try {
@@ -109,7 +107,15 @@ public class LienMySQL {
 				id = resultSet.getInt(1);
 				date = resultSet.getDate("date_naissance");
 				email = resultSet.getString(5);
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, date, email);
+				jeux = new ArrayList<Jeu>();
+				Jeu jeu;
+				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
+				while(this.resultSet.next()) {
+					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
+					jeux.add(jeu);
+				}
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, date, email);
+				
 			}
 			
 		} catch (SQLException e) {
@@ -136,6 +142,12 @@ public class LienMySQL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		Jeu jeu;
+		for(int i = 0; i < utilisateur.getJeuxPreferes().size(); i++) {
+			jeu = utilisateur.getJeuxPreferes().get(i);
+			this.executerUpdate("INSERT INTO jeuxFavoris VALUE (" + id + ", " + jeu.getId() + ");");
 		}
 
 		fermerConnections();
