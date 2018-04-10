@@ -21,6 +21,14 @@ public class Partie {
 		debut=new Date();
 	}
 	
+	public Partie(Utilisateur joueur,Jeu jeu, Date debut, Date fin) {
+		this.joueur=joueur;
+		this.jeu=jeu;
+		enCours=false;
+		this.debut=debut;
+		this.fin=fin;
+	}
+	
 	public void finPartie() {
 		enCours=false;
 		fin=new Date();

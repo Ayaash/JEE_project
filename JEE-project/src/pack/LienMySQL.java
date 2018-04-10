@@ -254,6 +254,44 @@ public class LienMySQL {
      	fermerConnections();
 	}
 	
+	public void majjeuliste(List<Jeu> l) {
+		Jeu j;
+		int taille = l.size();
+		
+		for(int i=0; i<taille;i++) {
+			j=l.get(i);
+			majjeu(j,j.isAutorise());
+		}
+	}
 	
+	//fonction des parties
+	public List<Partie> findParties() {
+		getConnection();
+		
+		List<Partie> listpart = new ArrayList<Partie>();
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM partie");
+			while (resultSet.next()) {
+					int idu = resultSet.getInt("jouer");
+					int idj = resultSet.getInt("jeu");					
+					Date debut=resultSet.getDate("date_debut");
+					Date fin=resultSet.getDate("date_fin");
+					Partie p = new Partie(null, null, debut,fin);
+					
+					listpart.add(p);
+			}
+			
+		} catch (Exception e) {
+			// sert à afficher les potentielles erreurs
+			e.printStackTrace();
+
+		} finally {
+			fermerConnections();
+		}
+		return listpart;
+
+	}
 
 }
