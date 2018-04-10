@@ -11,3 +11,13 @@ err{
 	background-color: black;
 	
 }
+
+table
+{
+    border-collapse: collapse;
+}
+
+td 
+{
+    border: 1px solid black; 
+}

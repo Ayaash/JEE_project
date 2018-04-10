@@ -16,9 +16,13 @@ import javax.servlet.http.HttpSession;
 
 import outilsdetest.TestSansBDD;
 import pack.Jeux;
+import pack.LienMySQL;
 import pack.Utilisateur;
 
 public class Inscription extends HttpServlet {
+	
+	LienMySQL lien = LienMySQL.getInstance();
+	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/inscription.jsp" ).forward( request, response );
@@ -28,9 +32,13 @@ public class Inscription extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
 		TestSansBDD.init();//TODO pour tests sans BDD seulement
+		LienMySQL BDD=LienMySQL.getInstance();
+		
 		if(request.getParameter("inscription") != null) {
+			
 			boolean echec=false;//retour a la page d'inscription si true
 			String pseudo=request.getParameter("pseudo");
+			
 			//verification que le pseudo n'est pas deja dans la BDD
 			Utilisateur foundUser=null;
 			//TODO zone a remplacer par la recherche dans BDD
@@ -44,7 +52,7 @@ public class Inscription extends HttpServlet {
 			//TODO }fin de la zone a modifier
 			
 			if(foundUser!=null) {
-				request.setAttribute("msgpseudo", "Ce pseudo est deja utilisé");
+				request.setAttribute("msgpseudo", "Ce pseudo est deja utilisï¿½");
 				echec=true;
 			}
 			
@@ -62,7 +70,7 @@ public class Inscription extends HttpServlet {
 				dateDeNaissance = format.parse(request.getParameter("ddn"));
 
 			} catch (ParseException e) {
-				//Le format de la date est verifié en amont, au cas ou, on redirige a la page d'inscription
+				//Le format de la date est verifiï¿½ en amont, au cas ou, on redirige a la page d'inscription
 				this.getServletContext().getRequestDispatcher( "/WEB-INF/inscription.jsp" ).forward( request, response );
 			}
 
@@ -85,7 +93,8 @@ public class Inscription extends HttpServlet {
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
 
-				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donnée
+				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donnï¿½e
+				BDD.insererUtilisateur(u);
 				
 				//On ouvre la session de l'utilisateur
 		        HttpSession session = request.getSession();

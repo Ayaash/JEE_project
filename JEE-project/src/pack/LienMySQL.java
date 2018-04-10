@@ -4,7 +4,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.mysql.jdbc.PreparedStatement;
+
+
 
 public class LienMySQL {
 	/**
@@ -88,6 +96,23 @@ public class LienMySQL {
 		}
 	}
 	
+	//tentative avec executeUpdate.
+	private void executerUpdate(String requete) {
+		String retour = null;
+		try {
+			statement = connection.createStatement();
+			int entier = statement.executeUpdate(requete);
+			
+			retour = resultSet.toString();
+			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
 		int id;
@@ -142,6 +167,59 @@ public class LienMySQL {
 		String requete = "UPDATE utilisateur SET pseudo=" + utilisateur.getPseudo() + ", mdp=" + utilisateur.getMotDePasse() + ", date_naissance=" + date + ", email=" + utilisateur.getCourriel() +" WHERE id=" + utilisateur.getId() + ";";
 		this.executerUpdate(requete);
 		fermerConnections();
+	}
+	
+	public void insererJeu(int id, String nom) throws SQLException {
+		getConnection();
+		java.sql.PreparedStatement stat;
+		int rowsUpdated;
+		
+		stat = connection.prepareStatement("insert into Jeu (id, nom) Values (?,?)");
+     	stat.setInt(1, id);
+     	stat.setString(2, nom);
+     	rowsUpdated = stat.executeUpdate();
+     	
+     	fermerConnections();
+	}
+	
+	public List<Jeu> findJeux() {
+		getConnection();
+		
+		List<Jeu> listJeu = new ArrayList<Jeu>();
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM jeu");
+			while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					String nom = resultSet.getString("nom");
+					Boolean autorise = resultSet.getBoolean("autorise");
+					listJeu.add(new Jeu(id, nom, autorise));
+			}
+			
+		} catch (Exception e) {
+			// sert à afficher les potentielles erreurs
+			e.printStackTrace();
+
+		} finally {
+			fermerConnections();
+		}
+		return listJeu;
+
+	}
+	
+	public void majjeu(Jeu j, boolean status) throws SQLException {
+		getConnection();
+		java.sql.PreparedStatement stat;
+		int rowsUpdated;
+		int id= j.getId();
+		
+		stat = connection.prepareStatement("UPDATE Jeu set status=? where id=?;");
+     	stat.setBoolean(1, status);;
+     	stat.setInt(2, id);
+     	rowsUpdated = stat.executeUpdate();
+     	
+     	fermerConnections();
 	}
 
 }

@@ -13,7 +13,7 @@
 </head>
 <body>
 	
-	<h1>vous jouez a <%= request.getSession().getAttribute("jeu") %></h1>
+	<h1>Vous jouez a <%= request.getSession().getAttribute("jeu") %></h1>
 
 
 	<form method="post" action=${pageContext.request.contextPath}/jeu>

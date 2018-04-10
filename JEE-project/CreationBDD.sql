@@ -9,14 +9,36 @@ CREATE TABLE utilisateur (
 	pseudo VARCHAR(30) NOT NULL,
 	mdp VARCHAR(30) NOT NULL,
 	date_naissance DATE NOT NULL,
+	date_inscription DATE NOT NULL,
+	nbparties INT NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	isAdmin BOOLEAN NOT NULL,
+	interdit BOOLEAN NOT NULL,
 	PRIMARY KEY(id)
+);
+
+INSERT INTO utilisateur (
+	id,
+	pseudo,
+	mdp,
+	date_naissance,
+	email,
+	isAdmin)
+	VALUES(
+	DEFAULT,
+	"chef",
+	"boss",
+	1990-01-01,
+	2018-04-01,
+	"boss@chef.com",
+	false,
+	true
 );
 
 CREATE TABLE jeu (
 	id INT NOT NULL AUTO_INCREMENT,
 	nom VARCHAR(100) NOT NULL,
+	autorise BOOLEAN NOT NULL,
 	PRIMARY KEY(id)
 );
 

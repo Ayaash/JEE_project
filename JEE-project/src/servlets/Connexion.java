@@ -48,10 +48,16 @@ public class Connexion extends HttpServlet {
 			//TODO }fin de la zone a remplacer par la recherche en BDD
 			
 			if(foundUser!=null) {//connexion reussie
+				//Si l'utilisateur n'est pas interdit, on cree la session, sinon, message d'erreur
 				//On cree une session
-				HttpSession session = request.getSession();
-			    session.setAttribute("utilisateur", foundUser);
-				response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
+				if(!foundUser.estInterdit()) {
+					HttpSession session = request.getSession();
+				    session.setAttribute("utilisateur", foundUser);
+					response.sendRedirect(this.getServletContext().getContextPath());//On renvoie a l'accueil
+				}else {
+					request.setAttribute("message", "Vous n'avez pas l'autorisation de vous connecter");
+			        request.getRequestDispatcher( "/WEB-INF/connexion.jsp" ).forward(request, response);
+				}
 			}else {
 				request.setAttribute("message", "Le mot de passe est invalide");
 		        request.getRequestDispatcher( "/WEB-INF/connexion.jsp" ).forward(request, response);

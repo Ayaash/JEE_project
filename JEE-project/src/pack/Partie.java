@@ -36,4 +36,11 @@ public class Partie {
 	public Utilisateur getJoueur() {
 		return joueur;
 	}
+	
+	public Date getDebut() {
+		return debut;
+	}
+	public Date getFin() {
+		return fin;
+	}
 }
