@@ -24,6 +24,7 @@ public class LienMySQL {
 	Connection connection = null;
 	java.sql.Statement statement = null;
 	ResultSet resultSet = null;
+	int resultInt = 0;
 	
 	//Singleton pour n'avoir qu'une seule source d'interaction avec la BDD
 	private static LienMySQL instance;
@@ -79,13 +80,11 @@ public class LienMySQL {
 			e.printStackTrace();
 		}
 	}
-	
-	//tentative avec executeUpdate.
 	private void executerUpdate(String requete) {
 		String retour = null;
 		try {
 			statement = connection.createStatement();
-			int entier = statement.executeUpdate(requete);
+			resultInt = statement.executeUpdate(requete);
 			
 			retour = resultSet.toString();
 			System.out.println(retour);		// retour est un objet, le toString est degueulasse. Mais au moins on a une preuve que quelque chose est revenu.
@@ -96,6 +95,7 @@ public class LienMySQL {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public Utilisateur authentificationUtilisateur(String pseudo, String motDePasse) {
 		getConnection();
@@ -127,8 +127,9 @@ public class LienMySQL {
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
 		String requete = "INSERT INTO utilisateur VALUE (" + utilisateur.getPseudo() + ", " + utilisateur.getMotDePasse() + ", " + date + ", " + utilisateur.getCourriel() + ", false);";
-		this.executerRequete(requete);
+		this.executerUpdate(requete);
 		requete = "SELECT id FROM utilisateur WHERE  pseudo=" + utilisateur.getPseudo() + " AND email= "  + utilisateur.getCourriel() + ";" ;
+		this.executerRequete(requete);
 		try {
 			resultSet.next();
 			id = resultSet.getInt(1);
