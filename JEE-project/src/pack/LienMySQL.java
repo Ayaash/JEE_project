@@ -110,6 +110,12 @@ public class LienMySQL {
 				id = resultSet.getInt(1);
 				jeux = new ArrayList<Jeu>();
 				Jeu jeu;
+				daten = resultSet.getDate("date_naissance");
+				email = resultSet.getString("email");
+				interdit=resultSet.getBoolean("interdit");
+				nbParties=resultSet.getInt("nbparties");
+				datei=resultSet.getDate("date-inscription");
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, daten, email, interdit, datei, nbParties);
 				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
 				while(this.resultSet.next()) {
 					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
@@ -117,12 +123,7 @@ public class LienMySQL {
 				}
 				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, date, email);
 				
-				daten = resultSet.getDate("date_naissance");
-				email = resultSet.getString("email");
-				interdit=resultSet.getBoolean("interdit");
-				nbParties=resultSet.getInt("nbparties");
-				datei=resultSet.getDate("date-inscription");
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, daten, email, interdit, datei, nbParties);
+				
 			}
 			
 		} catch (SQLException e) {
