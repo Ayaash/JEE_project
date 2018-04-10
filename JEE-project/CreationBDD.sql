@@ -13,6 +13,7 @@ CREATE TABLE utilisateur (
 	nbparties INT NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	isAdmin BOOLEAN NOT NULL,
+	interdit BOOLEAN NOT NULL,
 	PRIMARY KEY(id)
 );
 
@@ -25,10 +26,11 @@ INSERT INTO utilisateur (
 	isAdmin)
 	VALUES(
 	DEFAULT,
-	chef,
-	boss,
+	"chef",
+	"boss",
 	1990-01-01,
-	bosschefcom;
+	"boss@chef.com",
+	false,
 	true
 );
 
