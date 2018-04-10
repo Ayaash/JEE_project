@@ -115,7 +115,6 @@ public class LienMySQL {
 				interdit=resultSet.getBoolean("interdit");
 				nbParties=resultSet.getInt("nbparties");
 				datei=resultSet.getDate("date-inscription");
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, null, daten, email, interdit, datei, nbParties);
 				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
 				while(this.resultSet.next()) {
 					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
@@ -308,13 +307,22 @@ public class LienMySQL {
 		
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM partie");
-			while (resultSet.next()) {
-					int idu = resultSet.getInt("jouer");
-					int idj = resultSet.getInt("jeu");					
-					Date debut=resultSet.getDate("date_debut");
-					Date fin=resultSet.getDate("date_fin");
-					Partie p = new Partie(null, null, debut,fin);
+			ResultSet res = statement.executeQuery("SELECT * FROM partie");
+			while (res.next()) {
+					int idu = res.getInt("jouer");
+					int idj = res.getInt("jeu");					
+					Date debut=res.getDate("date_debut");
+					Date fin=res.getDate("date_fin");
+					executerRequete("SELECT * From utilisateur WHERE id=" + idu+";");
+					Utilisateur u = authentificationUtilisateur(resultSet.getString("pseudo"), resultSet.getString("mdp"));
+					executerRequete("SELECT * From jeu WHERE id=" + idj+";");
+					
+					int id = resultSet.getInt("id");
+					String nom = resultSet.getString("nom");
+					Boolean autorise = resultSet.getBoolean("autorise");
+					Jeu j=(new Jeu(id, nom, autorise));
+					
+					Partie p = new Partie(u, j, debut,fin);
 					
 					listpart.add(p);
 			}
