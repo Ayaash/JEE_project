@@ -44,6 +44,7 @@
 			List<Jeu> list=(List<Jeu>) request.getSession().getAttribute("listejeux");
 			Iterator<Jeu> iterJ=list.iterator();
 			while(iterJ.hasNext()){
+				
 				Jeu jeu=iterJ.next();
 				//On cherche le nombre de parties en cours pour ce jeu
 				int nbPart=0;

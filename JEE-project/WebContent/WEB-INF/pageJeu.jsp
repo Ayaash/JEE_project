@@ -15,7 +15,7 @@
 </head>
 <body>
 	
-	<h1>Vous jouez a <%= request.getSession().getAttribute("jeu") %></h1>
+	<h1>Vous jouez a <%= ((Jeu) request.getSession().getAttribute("jeu")).getNom() %></h1>
 
 
 	<form method="post" action=${pageContext.request.contextPath}/jeu>
