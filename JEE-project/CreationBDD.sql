@@ -29,6 +29,7 @@ INSERT INTO utilisateur (
 	"chef",
 	"boss",
 	1990-01-01,
+	2018-04-01,
 	"boss@chef.com",
 	false,
 	true
