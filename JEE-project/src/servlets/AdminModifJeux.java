@@ -33,7 +33,7 @@ public class AdminModifJeux extends HttpServlet {
 			//La session correspond a un admin
         	LienMySQL BDD=LienMySQL.getInstance();
     		List<Jeu> jeux=BDD.findJeux();
-        	request.setAttribute("jeuxdispo", jeux);
+        	request.setAttribute("jeux", jeux);
         	this.getServletContext().getRequestDispatcher( "/WEB-INF/adminModifJeux.jsp" ).forward( request, response );
        }
 		
@@ -48,13 +48,15 @@ public class AdminModifJeux extends HttpServlet {
 		if(request.getParameter("confirmer") != null) {
 			LienMySQL BDD=LienMySQL.getInstance();
     		List<Jeu> jeux=BDD.findJeux();
-        	request.setAttribute("jeuxdispo", jeux);
+        	request.setAttribute("jeux", jeux);
 	
 
 			for(int i=0;i<jeux.size();i++){
-				String jeu=jeux.get(i).toString();
+				String jeu=jeux.get(i).getNom();
 				if(request.getParameter(jeu) != null) {
-					jeux.add(jeux.get(i));
+					jeux.get(i).setAutorise(true);	
+				}else {
+					jeux.get(i).setAutorise(false);	
 				}
 			}
 			try {

@@ -105,6 +105,7 @@ public class LienMySQL {
 		List<Jeu> jeux;
 		Date datei;
 		Boolean interdit;
+		Boolean admin;
 		int nbParties;
 		Utilisateur utilisateur = null;
 		ResultSet rs = executerRequete("SELECT * FROM utilisateur WHERE pseudo=\"" + pseudo + "\" AND mdp=\"" + motDePasse + "\";");
@@ -117,6 +118,7 @@ public class LienMySQL {
 				daten = rs.getDate("date_naissance");
 				email = rs.getString("email");
 				interdit=rs.getBoolean("interdit");
+				admin = rs.getBoolean("isAdmin");
 				nbParties=rs.getInt("nbparties");
 				datei=rs.getDate("date_inscription");
 				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id + ";");
@@ -125,7 +127,12 @@ public class LienMySQL {
 					jeux.add(jeu);
 				}
 				System.out.println("wow");
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				if(admin) {
+					utilisateur = new Admin(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				}else {
+					utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				}
+				
 				
 				
 			}
@@ -151,6 +158,7 @@ public class LienMySQL {
 		List<Jeu> jeux;
 		Date datei;
 		Boolean interdit;
+		Boolean admin;
 		int nbParties;
 		Utilisateur utilisateur = null;
 		String pseudo;
@@ -167,14 +175,19 @@ public class LienMySQL {
 				daten = rs1.getDate("date_naissance");
 				email = rs1.getString("email");
 				interdit=rs1.getBoolean("interdit");
+				admin = rs1.getBoolean("isAdmin");
 				nbParties=rs1.getInt("nbparties");
-				datei=rs1.getDate("date-inscription");
+				datei=rs1.getDate("date_inscription");
 				rs2 = executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id + ";");
 				while(rs2.next()) {
 					jeu = new Jeu(rs2.getInt("id"), rs2.getString("nom"), rs2.getBoolean("autorise"));
 					jeux.add(jeu);
 				}
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				if(admin) {
+					utilisateur = new Admin(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				}else {
+					utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				}
 				
 				listu.add(utilisateur);
 			}
@@ -348,7 +361,7 @@ public class LienMySQL {
 		int rowsUpdated;
 		int id= j.getId();
 		
-		stat = connection.prepareStatement("UPDATE Jeu set status=? where id=?;");
+		stat = connection.prepareStatement("UPDATE Jeu set autorise=? where id=?;");
      	stat.setBoolean(1, status);;
      	stat.setInt(2, id);
      	rowsUpdated = stat.executeUpdate();

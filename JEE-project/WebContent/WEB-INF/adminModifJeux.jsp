@@ -22,7 +22,7 @@
 	List<Jeu> jeux=(List<Jeu>) request.getAttribute("jeux");
 		for(int i=0;i<jeux.size();i++){
 			Jeu jeu=jeux.get(i);
-			String sjeu=jeux.get(i).toString();
+			String sjeu=jeux.get(i).getNom();
 			if(jeu.isAutorise()){
 				out.println("<p>    <input type='checkbox' name='"+sjeu+"' checked=checked > "+sjeu+"</p>");
 	

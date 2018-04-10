@@ -47,7 +47,7 @@ public class Accueil extends HttpServlet {
 		   session.setAttribute("listejeux", BDD.findJeuxautorise());
 
     	   
-    	  //this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
+    	  this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
       }
 
 	}

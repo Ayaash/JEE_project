@@ -26,7 +26,9 @@ public class Utilisateur {
 		this.dateInscription=new Date();
 	}
 	
-	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel) {
+
+	
+	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel,boolean interdit, Date dateInscription, int nbParties) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
@@ -36,18 +38,6 @@ public class Utilisateur {
 		this.interdit=false;
 		this.dateInscription=new Date();
 		this.nbParties=0;
-	}
-	
-	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel,boolean interdit, Date dateInscription, int nbParties) {
-		this.id = id;
-		this.pseudo = pseudo;
-		this.motDePasse = motDePasse;
-		this.jeuxPreferes = jeuxPreferes;
-		this.dateDeNaissance = dateDeNaissance;
-		this.courriel = courriel;
-		this.interdit=interdit;
-		this.dateInscription=dateInscription;
-		this.nbParties=nbParties;
 
 
 	}
