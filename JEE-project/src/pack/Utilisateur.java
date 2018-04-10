@@ -26,7 +26,6 @@ public class Utilisateur {
 		this.dateInscription=new Date();
 	}
 	
-	@Deprecated
 	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.id = id;
 		this.pseudo = pseudo;

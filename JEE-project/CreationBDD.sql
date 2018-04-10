@@ -58,7 +58,7 @@ CREATE TABLE partie (
 CREATE TABLE jeuxFavoris (
 	joueur INT NOT NULL,
 	jeu INT NOT NULL,
-	PRIMARY KEY(joueur, jeu)
+	PRIMARY KEY(joueur, jeu),
 	FOREIGN KEY (joueur)
 		REFERENCES utilisateur(id),
 	FOREIGN KEY (jeu)
