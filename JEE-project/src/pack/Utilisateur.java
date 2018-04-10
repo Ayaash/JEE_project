@@ -35,7 +35,7 @@ public class Utilisateur {
 		this.jeuxPreferes = jeuxPreferes;
 		this.dateDeNaissance = dateDeNaissance;
 		this.courriel = courriel;
-		this.interdit=false;
+		this.interdit=interdit;
 		this.dateInscription=new Date();
 		this.nbParties=0;
 
