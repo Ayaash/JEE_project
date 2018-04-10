@@ -191,10 +191,11 @@ public class LienMySQL {
 
 	}
 	
-	public void majjeu(int id, boolean status) throws SQLException {
+	public void majjeu(Jeu j, boolean status) throws SQLException {
 		getConnection();
 		java.sql.PreparedStatement stat;
 		int rowsUpdated;
+		int id= j.getId();
 		
 		stat = connection.prepareStatement("UPDATE Jeu set status=? where id=?;");
      	stat.setBoolean(1, status);;
