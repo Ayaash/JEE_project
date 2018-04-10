@@ -231,7 +231,33 @@ public class LienMySQL {
 		
 		try {
 			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM jeu");
+			resultSet = statement.executeQuery("SELECT * FROM jeu;");
+			while (resultSet.next()) {
+					int id = resultSet.getInt("id");
+					String nom = resultSet.getString("nom");
+					Boolean autorise = resultSet.getBoolean("autorise");
+					listJeu.add(new Jeu(id, nom, autorise));
+			}
+			
+		} catch (Exception e) {
+			// sert à afficher les potentielles erreurs
+			e.printStackTrace();
+
+		} finally {
+			fermerConnections();
+		}
+		return listJeu;
+
+	}
+	
+	public List<Jeu> findJeuxautorise() {
+		getConnection();
+		
+		List<Jeu> listJeu = new ArrayList<Jeu>();
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM jeu where interdit=false;");
 			while (resultSet.next()) {
 					int id = resultSet.getInt("id");
 					String nom = resultSet.getString("nom");
