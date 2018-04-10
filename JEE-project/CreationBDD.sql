@@ -67,9 +67,43 @@ INSERT INTO jeu
 	VALUES(
 	DEFAULT,
 	"Le jeu",
+	false
+);
+
+INSERT INTO jeu
+	VALUES(
+	DEFAULT,
+	"SeaWar",
 	true
 );
 
+INSERT INTO jeu
+	VALUES(
+	DEFAULT,
+	"TES II: Daggerfall",
+	true
+);
+
+INSERT INTO jeu
+	VALUES(
+	DEFAULT,
+	"Stellaris",
+	true
+);
+
+INSERT INTO jeu
+	VALUES(
+	DEFAULT,
+	"Dames",
+	true
+);
+
+INSERT INTO jeu
+	VALUES(
+	DEFAULT,
+	"Paf le Chien",
+	true
+);
 
 INSERT INTO utilisateur
 	VALUES(
