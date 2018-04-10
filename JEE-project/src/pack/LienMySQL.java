@@ -166,7 +166,7 @@ public class LienMySQL {
 		ResultSet rs1 = executerRequete("SELECT * FROM utilisateur;");
 		ResultSet rs2=null;
 		try {
-			if(rs1.next()) {
+			while(rs1.next()) {
 				id = rs1.getInt(1);
 				pseudo=rs1.getString("pseudo");
 				motDePasse=rs1.getString("mdp");
