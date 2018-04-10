@@ -18,9 +18,13 @@ import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
 import pack.Jeux;
+import pack.LienMySQL;
 import pack.Utilisateur;
 
 public class AdminModifJeux extends HttpServlet {
+	
+	LienMySQL lien = LienMySQL.getInstance();
+	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		
