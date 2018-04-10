@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LienMySQL {
 	/**
-	 * Necessite un serveur MySQL actif avec le mot de passe root = 'root'. Et une database nommée projet_jee.
+	 * Necessite un serveur MySQL actif avec le mot de passe root = ''. Et une database nommée projet_jee.
 	 */
 
 	private String serveur = "jdbc:mysql://localhost:3306/projet_jee";
@@ -45,7 +45,7 @@ public class LienMySQL {
 		} 
 
 		try {
-			connection =  DriverManager.getConnection(serveur, "root", "root");
+			connection =  DriverManager.getConnection(serveur, "root", "");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
