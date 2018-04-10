@@ -13,17 +13,22 @@ import javax.servlet.http.HttpSession;
 import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
-import pack.Jeux;
+import pack.Jeu;
+import pack.LienMySQL;
 import pack.Partie;
 import pack.Utilisateur;
 
 
 public class Accueil extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
        
-		TestSansBDD.init();//TODO Pour tests uniquement, a supprimer
-		
+		LienMySQL BDD=LienMySQL.getInstance();
 	
         //On change la page d'accueil en fonction du type de connection
 		
@@ -34,13 +39,13 @@ public class Accueil extends HttpServlet {
         }else if(ct==ConnectionType.USER) {
 			//La session correspondant a un utilisateur
 			HttpSession session = request.getSession();
-		    session.setAttribute("listejeux", TestSansBDD.jeuxDispo);//TODO a faire avec BDD
+		    session.setAttribute("listejeux", BDD.findAutorisedJeux());//TODO a faire avec BDD
 
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_user.jsp" ).forward( request, response );
        }else if(ct==ConnectionType.ADMIN) {
     	   //La session correspondant a un administrateur
     	   HttpSession session = request.getSession();
-		   session.setAttribute("listejeux", TestSansBDD.jeuxDispo);//TODO a faire avec BDD
+		   session.setAttribute("listejeux", BDD.findAutorisedJeux());//TODO a faire avec BDD
 
     	   
     	   this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
@@ -55,10 +60,10 @@ public class Accueil extends HttpServlet {
 
       //Recuperation du jeu selectionné si necessaire
   		if(session.getAttribute("listejeux")!=null) {
-  			List<Jeux> list=(List<Jeux>) request.getSession().getAttribute("listejeux");
-  			Iterator<Jeux> iter=list.iterator();
+  			List<Jeu> list=(List<Jeu>) request.getSession().getAttribute("listejeux");
+  			Iterator<Jeu> iter=list.iterator();
   			while(iter.hasNext()){
-  				Jeux jeu=iter.next();
+  				Jeu jeu=iter.next();
   				if(request.getParameter(jeu.toString())!=null) {
   					//On a selectionne un jeu, on est redirige vers la page de jeu
   			        session.setAttribute("jeu", jeu);

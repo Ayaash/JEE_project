@@ -8,15 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
 import pack.Partie;
-import pack.Jeux;
+import pack.Jeu;
 import pack.Utilisateur;
 
 
 public class PageJeu extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
        		
@@ -49,7 +53,7 @@ public class PageJeu extends HttpServlet {
 	    	if(session.getAttribute("partieencours")==null) {
 
 		        //On ajoute la parie en cours
-		        Partie part=new Partie((Utilisateur) session.getAttribute("utilisateur"),(Jeux) session.getAttribute("jeu"));
+		        Partie part=new Partie((Utilisateur) session.getAttribute("utilisateur"),(Jeu) session.getAttribute("jeu"));
 		        FonctionsUtile.partiesEnCours.add(part);
 				
 		        session.setAttribute("partieencours", part);

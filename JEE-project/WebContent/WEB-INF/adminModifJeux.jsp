@@ -4,7 +4,7 @@
 <html>
 <head>
 
-	<%@ page import="pack.Jeux" %>
+	<%@ page import="pack.Jeu" %>
 	<%@ page import="java.util.List" %>
 
 
@@ -19,20 +19,22 @@
 
 	<p>Jeux Possibles:</p>
 	<% 
-	List<Jeux> listJeux=(List<Jeux>) request.getAttribute("jeuxdispo");
-	for(int i=0;i<Jeux.values().length;i++){
-		String jeu=Jeux.values()[i].toString();
-		if(listJeux.contains(Jeux.values()[i])){
-			out.println("<p>    <input type='checkbox' name='"+jeu+"' checked=checked > "+jeu+"</p>");
-
-		}else{
-			out.println("<p>    <input type='checkbox' name='"+jeu+"'> "+jeu+"</p>");
-		}
-	}
-	%>
+	List<Jeu> jeux=(List<Jeu>) request.getAttribute("jeux");
+		for(int i=0;i<jeux.size();i++){
+			Jeu jeu=jeux.get(i);
+			String sjeu=jeux.get(i).toString();
+			if(jeu.isAutorise()){
+				out.println("<p>    <input type='checkbox' name='"+sjeu+"' checked=checked > "+sjeu+"</p>");
+	
+			}else{
+				out.println("<p>    <input type='checkbox' name='"+sjeu+"'> "+sjeu+"</p>");
+			}
+		}%>
 
 	
 	<input type="submit" value="Confirmer" name="confirmer">	
 	<input type="submit" value="Accueil" name="accueil">
+	
+	</form>
 </body>
 </html>

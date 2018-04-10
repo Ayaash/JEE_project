@@ -4,7 +4,6 @@
 <html>
 <head>
 
-	<%@ page import="pack.Jeux" %>
 	<%@ page import="pack.Utilisateur" %>
 	<%@ page import="pack.Partie" %>
 	
