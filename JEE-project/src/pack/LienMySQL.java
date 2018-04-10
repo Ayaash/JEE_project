@@ -127,7 +127,7 @@ public class LienMySQL {
 		String date = sdf.format(utilisateur.getDateDeNaissance());
 		
 		String requete = "INSERT INTO utilisateur VALUE (" + utilisateur.getPseudo() + ", " + utilisateur.getMotDePasse() + ", " + date + ", " + utilisateur.getCourriel() + ", false);";
-		this.executerUpdate(requete);
+		this.executerRequete(requete);
 		requete = "SELECT id FROM utilisateur WHERE  pseudo=" + utilisateur.getPseudo() + " AND email= "  + utilisateur.getCourriel() + ";" ;
 		try {
 			resultSet.next();

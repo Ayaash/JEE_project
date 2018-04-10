@@ -7,14 +7,15 @@ public class Utilisateur {
 	private int id;
 	private String pseudo;
 	private String motDePasse;
-	private List<Jeux> jeuxPreferes;
+	private List<Jeu> jeuxPreferes;
 	private Date dateDeNaissance;
 	private String courriel;
 	private Date dateInscription;
 	private int nbParties;
-	private boolean interdit;
-		
-	public Utilisateur(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+	private boolean interdit;	
+	
+	
+	public Utilisateur(String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.id = -1;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
@@ -26,7 +27,7 @@ public class Utilisateur {
 	}
 	
 	@Deprecated
-	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
@@ -38,7 +39,7 @@ public class Utilisateur {
 		this.nbParties=0;
 	}
 	
-	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel,boolean interdit, Date dateInscription, int nbParties) {
+	public Utilisateur(int id, String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel,boolean interdit, Date dateInscription, int nbParties) {
 		this.id = id;
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
@@ -52,7 +53,7 @@ public class Utilisateur {
 
 	}
 	
-	public void modifiy(String pseudo, String motDePasse, List<Jeux> jeuxPreferes, Date dateDeNaissance, String courriel) {
+	public void modifiy(String pseudo, String motDePasse, List<Jeu> jeuxPreferes, Date dateDeNaissance, String courriel) {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 		this.jeuxPreferes = jeuxPreferes;
@@ -76,7 +77,7 @@ public class Utilisateur {
 	public Date getDateDeNaissance() {
 		return dateDeNaissance;
 	}
-	public List<Jeux> getJeuxPreferes() {
+	public List<Jeu> getJeuxPreferes() {
 		return jeuxPreferes;
 	}
 	
