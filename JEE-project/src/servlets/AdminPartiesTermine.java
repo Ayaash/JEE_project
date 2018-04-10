@@ -12,7 +12,6 @@ import pack.ConnectionType;
 import pack.FonctionsUtile;
 import pack.LienMySQL;
 import pack.Partie;
-import pack.Utilisateur;
 
 public class AdminPartiesTermine extends HttpServlet {
 	/**
@@ -31,7 +30,7 @@ public class AdminPartiesTermine extends HttpServlet {
 			//La session correspond a un admin
         	LienMySQL BDD=LienMySQL.getInstance();
 
-        	List<Partie> parties= BDD.getPartiesTermine();//TODO a remplacer par la recuperation dans BDD 
+        	List<Partie> parties= BDD.findParties();
     		request.setAttribute("parties", parties);
 
         	this.getServletContext().getRequestDispatcher( "/WEB-INF/adminPartiesTermine.jsp" ).forward( request, response );

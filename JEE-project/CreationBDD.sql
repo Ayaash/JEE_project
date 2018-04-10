@@ -17,23 +17,6 @@ CREATE TABLE utilisateur (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO utilisateur (
-	id,
-	pseudo,
-	mdp,
-	date_naissance,
-	email,
-	isAdmin)
-	VALUES(
-	DEFAULT,
-	"chef",
-	"boss",
-	1990-01-01,
-	2018-04-01,
-	"boss@chef.com",
-	false,
-	true
-);
 
 CREATE TABLE jeu (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -42,15 +25,6 @@ CREATE TABLE jeu (
 	PRIMARY KEY(id)
 );
 
-INSERT INTO jeu (
-	id,
-	nom,
-	autorise)
-	VALUES(
-	DEFAULT,
-	"Le jeu",
-	true,
-);
 
 CREATE TABLE preference(
 	iduser INT NOT NULL;
@@ -80,3 +54,33 @@ CREATE TABLE jeuxFavoris (
 	FOREIGN KEY (jeu)
 		REFERENCES jeu(id)
 );
+
+
+INSERT INTO utilisateur (
+	id,
+	pseudo,
+	mdp,
+	date_naissance,
+	email,
+	isAdmin)
+	VALUES(
+	DEFAULT,
+	"chef",
+	"boss",
+	1990-01-01,
+	2018-04-01,
+	"boss@chef.com",
+	false,
+	true
+);
+
+INSERT INTO jeu (
+	id,
+	nom,
+	autorise)
+	VALUES(
+	DEFAULT,
+	"Le jeu",
+	true,
+);
+

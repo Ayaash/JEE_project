@@ -39,16 +39,15 @@ public class Accueil extends HttpServlet {
         }else if(ct==ConnectionType.USER) {
 			//La session correspondant a un utilisateur
 			HttpSession session = request.getSession();
-		    session.setAttribute("listejeux", BDD.findAutorisedJeux());//TODO a faire avec BDD
-
+		    session.setAttribute("listejeux", BDD.findJeuxautorise());
 			this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_user.jsp" ).forward( request, response );
        }else if(ct==ConnectionType.ADMIN) {
     	   //La session correspondant a un administrateur
     	   HttpSession session = request.getSession();
-		   session.setAttribute("listejeux", BDD.findAutorisedJeux());//TODO a faire avec BDD
+		   session.setAttribute("listejeux", BDD.findJeuxautorise());
 
     	   
-    	   this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
+    	  //this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil_admin.jsp" ).forward( request, response );
       }
 
 	}

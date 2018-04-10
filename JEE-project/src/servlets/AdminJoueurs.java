@@ -9,14 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import outilsdetest.TestSansBDD;
 import pack.ConnectionType;
 import pack.FonctionsUtile;
-import pack.Jeu;
 import pack.LienMySQL;
 import pack.Utilisateur;
 
 public class AdminJoueurs extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException{
 		
@@ -27,7 +30,7 @@ public class AdminJoueurs extends HttpServlet {
         }else {
 			//La session correspond a un admin
     		LienMySQL BDD=LienMySQL.getInstance();
-    		List<Utilisateur> users= BDD.getAllUtilisateurs();
+    		List<Utilisateur> users= BDD.listusers();
     		request.setAttribute("users", users);
         	this.getServletContext().getRequestDispatcher( "/WEB-INF/adminJoueurs.jsp" ).forward( request, response );
        }
@@ -40,7 +43,7 @@ public class AdminJoueurs extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
 
 		LienMySQL BDD=LienMySQL.getInstance();
-		List<Utilisateur> users= BDD.getAllUtilisateurs();
+		List<Utilisateur> users= BDD.listusers();
 		
 		//On parcours la liste des joueurs pour voir si le bouton d'interdiction a ete clique
 		Iterator<Utilisateur> iter=users.iterator();
@@ -52,7 +55,7 @@ public class AdminJoueurs extends HttpServlet {
 
 			}
 		}
-		BDD.modifyAllUtilisateurs(utilisateur)//TODO modifier la BDD
+		BDD.modiflisteutilisateur(users);
 	
 		//Bouton accueil
 		if(request.getParameter("accueil")!=null) {
