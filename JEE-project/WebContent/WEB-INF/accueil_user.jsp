@@ -51,7 +51,7 @@
 				Iterator<Partie> iterP=FonctionsUtile.partiesEnCours.iterator();
 				while(iterP.hasNext()){
 					Partie part=iterP.next();
-					if(part.getJeu()==jeu){
+					if(0==(part.getJeu().getNom()).compareTo(jeu.getNom())){
 						nbPart+=1;
 					}
 				}

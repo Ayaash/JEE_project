@@ -43,7 +43,7 @@ public class AdminJoueurs extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		//response.sendRedirect("/inscription");
 
 		LienMySQL BDD=LienMySQL.getInstance();
-		List<Utilisateur> users= BDD.listusers();
+		List<Utilisateur> users= (List<Utilisateur>) request.getAttribute("users");
 		
 		//On parcours la liste des joueurs pour voir si le bouton d'interdiction a ete clique
 		Iterator<Utilisateur> iter=users.iterator();

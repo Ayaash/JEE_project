@@ -16,7 +16,7 @@
 	<meta http-equiv="refresh" content="2" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Modifier la liste des parties terminées</title>
+	<title> la liste des parties terminées</title>
 </head>
 <body>
 
