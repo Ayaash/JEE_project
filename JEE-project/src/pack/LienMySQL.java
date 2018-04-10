@@ -121,7 +121,7 @@ public class LienMySQL {
 					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
 					jeux.add(jeu);
 				}
-				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, date, email);
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
 				
 				
 			}
@@ -254,15 +254,6 @@ public class LienMySQL {
      	fermerConnections();
 	}
 	
-	public List<Jeu> recuppref(int id){
-		getConnection();
-		
-		List<Jeu> listJeu = new ArrayList<Jeu>();
-		
-		
-		
-		fermerConnections();
-		return listJeu;
-	}
+	
 
 }
