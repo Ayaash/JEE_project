@@ -18,7 +18,7 @@
 	<meta http-equiv="refresh" content="2" />
 
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Modifier la liste de jeux</title>
+	<title>Modifier la liste des joueurs</title>
 </head>
 <body>
 
