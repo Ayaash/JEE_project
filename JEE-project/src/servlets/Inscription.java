@@ -93,7 +93,8 @@ public class Inscription extends HttpServlet {
 	        	//creation de l'utilisateur
 				Utilisateur u = new Utilisateur(pseudo, motDePasse, jeux, dateDeNaissance, courriel);
 
-				BDD.insererUtilisateur(u);//TODO peut etre modifier l'insertion
+				TestSansBDD.users.add(u);//TODO ajout de l'utilisateur dans la base de donn�e
+				BDD.insererUtilisateur(u);
 				
 				//On ouvre la session de l'utilisateur
 		        HttpSession session = request.getSession();
