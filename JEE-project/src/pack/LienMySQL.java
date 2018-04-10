@@ -133,6 +133,53 @@ public class LienMySQL {
 		return utilisateur;
 	}
 	
+	public List<Utilisateur> listusers(){
+		getConnection();
+		
+		List<Utilisateur> listu = new ArrayList<Utilisateur>();
+		
+		int id;
+		Date daten;
+		String email;
+		List<Jeu> jeux;
+		Date datei;
+		Boolean interdit;
+		int nbParties;
+		Utilisateur utilisateur = null;
+		String pseudo;
+		String motDePasse;
+		executerRequete("SELECT * FROM utilisateur WHERE pseudo=" + pseudo + " AND mdp=" + motDePasse + ";");
+		ResultSet rs=resultSet;
+		try {
+			if(rs.next()) {
+				id = rs.getInt(1);
+				pseudo=rs.getString("pseudo");
+				motDePasse=rs.getString("mdp");
+				jeux = new ArrayList<Jeu>();
+				Jeu jeu;
+				daten = rs.getDate("date_naissance");
+				email = rs.getString("email");
+				interdit=rs.getBoolean("interdit");
+				nbParties=rs.getInt("nbparties");
+				datei=rs.getDate("date-inscription");
+				executerRequete("SELECT jeu.id AS id, jeu.nom AS nom, jeu.autorise AS autorise FROM jeu, jeuxFavoris WHERE jeuxFavoris.joueur=" + id);
+				while(this.resultSet.next()) {
+					jeu = new Jeu(resultSet.getInt("id"), resultSet.getString("nom"), resultSet.getBoolean("autorise"));
+					jeux.add(jeu);
+				}
+				utilisateur = new Utilisateur(id, pseudo, motDePasse, jeux, daten, email,interdit,datei,nbParties);
+				
+				listu.add(utilisateur);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		return listu;
+	}
+	
 	public int insererUtilisateur(Utilisateur utilisateur) {
 		getConnection();
 		int id = -1;
@@ -162,6 +209,8 @@ public class LienMySQL {
 		
 		return id;		
 	}
+	
+	
 	
 	public void modifierUtilisateur(Utilisateur utilisateur) {
 		getConnection();
