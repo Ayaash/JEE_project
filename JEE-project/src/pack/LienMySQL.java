@@ -176,6 +176,16 @@ public class LienMySQL {
 	}
 	
 	
+	public void modiflisteutilisateur(List<Utilisateur> l) {
+		Utilisateur u;
+		int taille=l.size();
+		
+		for(int i=0; i<taille;i++) {
+			u=l.get(i);
+			modifierUtilisateur(u);
+		}
+	}
+	
 	//retourne true si le pseudonyme passéen parametre est pris
 	public boolean pseudopris(String pseud) {
 		boolean result=false;
@@ -254,7 +264,7 @@ public class LienMySQL {
      	fermerConnections();
 	}
 	
-	public void majjeuliste(List<Jeu> l) {
+	public void majjeuliste(List<Jeu> l) throws SQLException {
 		Jeu j;
 		int taille = l.size();
 		
